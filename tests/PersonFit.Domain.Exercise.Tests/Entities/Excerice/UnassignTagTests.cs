@@ -1,10 +1,11 @@
-namespace PersonFit.Domain.Exercise.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core;
+using PersonFit.Core;
 using Shouldly;
 using Xunit;
+
+namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
 
 public class UnassignTagTests
 {
@@ -13,7 +14,7 @@ public class UnassignTagTests
     {
         var id = new AggregateId();
         var tags = new[] { "test" };
-        var exercise = Exercise.Create(id, string.Empty, string.Empty, Array.Empty<string>());
+        var exercise = Core.Entities.Exercise.Create(id, string.Empty, string.Empty, Array.Empty<string>());
         exercise.UnassignTags(tags);
         
         exercise.Tags.Count().ShouldBe(0);
@@ -27,7 +28,7 @@ public class UnassignTagTests
         var id = new AggregateId();
         var tags = new[] { "test" };
         var newTag = new[] { "gym", "home" };
-        var exercise = Exercise.Create(id, string.Empty, string.Empty, tags);
+        var exercise = Core.Entities.Exercise.Create(id, string.Empty, string.Empty, tags);
         exercise.UnassignTags(newTag);
         
         exercise.Tags.Count().ShouldBe(1);
@@ -41,7 +42,7 @@ public class UnassignTagTests
         var id = new AggregateId();
         var tags = new[] { "gym", "home" };
 
-        var exercise = Exercise.Create(id, string.Empty, string.Empty, tags);
+        var exercise = Core.Entities.Exercise.Create(id, string.Empty, string.Empty, tags);
         exercise.UnassignTags(tags);
         
         exercise.Tags.Count().ShouldBe(0);
@@ -58,7 +59,7 @@ public class UnassignTagTests
         var mergeTags = new List<string>(tags);
         mergeTags.AddRange(newTag);
         
-        var exercise = Exercise.Create(id, string.Empty, string.Empty, mergeTags.ToArray());
+        var exercise = Core.Entities.Exercise.Create(id, string.Empty, string.Empty, mergeTags.ToArray());
         exercise.UnassignTags(newTag);
         
         exercise.Tags.Count().ShouldBe(1);

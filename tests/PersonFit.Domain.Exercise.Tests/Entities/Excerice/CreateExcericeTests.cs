@@ -1,9 +1,10 @@
-namespace PersonFit.Domain.Exercise.Tests;
 using System;
-using Shouldly;
-using Core;
-using Xunit;
 using System.Linq;
+using PersonFit.Core;
+using Shouldly;
+using Xunit;
+
+namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
 
 public class CreateExerciseTests
 {
@@ -14,7 +15,7 @@ public class CreateExerciseTests
         var name = "plank";
         var description = "The plank is an isometric core strength exercise that involves maintaining a position similar to a push-up for the maximum possible time.";
         
-        var exercise = Exercise.Create(id, name, description, Array.Empty<string>());
+        var exercise = Core.Entities.Exercise.Create(id, name, description, Array.Empty<string>());
         exercise.ShouldNotBeNull();
         exercise.Id.ShouldBe(id);
         exercise.Description.ShouldBe(description);
@@ -31,7 +32,7 @@ public class CreateExerciseTests
         var name = "plank";
         var description = string.Empty;
         var tags = new[] { "home", "gym" };
-        var exercise = Exercise.Create(id, name, description, tags);
+        var exercise = Core.Entities.Exercise.Create(id, name, description, tags);
         exercise.ShouldNotBeNull();
         exercise.Id.ShouldBe(id);
         exercise.Description.ShouldBeEmpty();

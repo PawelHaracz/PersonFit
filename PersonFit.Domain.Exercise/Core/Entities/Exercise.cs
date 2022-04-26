@@ -1,9 +1,8 @@
-﻿
-using PersonFit.Domain.Exercise.ValueObjects;
+﻿using PersonFit.Core;
+using PersonFit.Domain.Exercise.Core.Events;
+using PersonFit.Domain.Exercise.Core.ValueObjects;
 
-namespace PersonFit.Domain.Exercise;
-using Core;
-using Events;
+namespace PersonFit.Domain.Exercise.Core.Entities;
 
 internal sealed class Exercise : AggregateRoot, IAggregateRoot
 {
@@ -84,5 +83,16 @@ internal sealed class Exercise : AggregateRoot, IAggregateRoot
         {
             AddEvent(new UnassignedTagsEvent(tags));
         }
+    }
+
+    public void AddContent(MediaContent content)
+    {
+        if (_contents.Contains(content))
+        {
+            return;
+        }
+
+        _contents.Add(content);
+        AddEvent(new MediaContentAddedEvent(Id, $"{content.Type}", content.Url));
     }
 }
