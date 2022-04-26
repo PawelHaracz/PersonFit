@@ -1,6 +1,5 @@
-using System;
-
 namespace PersonFit.Domain.Exercise.Tests;
+using System;
 using Shouldly;
 using Core;
 using Xunit;

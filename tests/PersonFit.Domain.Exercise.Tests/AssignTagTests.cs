@@ -1,11 +1,10 @@
+namespace PersonFit.Domain.Exercise.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using PersonFit.Core;
 using Shouldly;
 using Xunit;
-
-namespace PersonFit.Domain.Exercise.Tests;
 
 public class AssignTagTests
 {
@@ -43,6 +42,7 @@ public class AssignTagTests
         var newTag = new[] { "gym" };
         var mergeTags = new List<string>(tags);
         mergeTags.AddRange(newTag);
+        
         var exercise = Exercise.Create(id, string.Empty, string.Empty, tags);
         exercise.AssignTags(newTag);
         
