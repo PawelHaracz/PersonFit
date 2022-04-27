@@ -1,6 +1,6 @@
 namespace PersonFit.Core;
 
-public interface IRepository<TEntity>
+public interface IDomainRepository<TEntity>
 {
     Task<TEntity> GetAsync(AggregateId id);
     Task<bool> ExistsAsync(AggregateId id);

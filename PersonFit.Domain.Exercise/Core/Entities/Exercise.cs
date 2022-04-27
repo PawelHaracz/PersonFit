@@ -23,7 +23,7 @@ internal sealed class Exercise : AggregateRoot, IAggregateRoot
     public string Name { get; private set; }
     public string Description { get; private set; }
 
-    private Exercise(Guid id, string name, string description, IEnumerable<string> tags, IEnumerable<MediaContent> mediaContents,  int version = 0)
+    public Exercise(Guid id, string name, string description, IEnumerable<string> tags, IEnumerable<MediaContent> mediaContents,  int version = 0)
     {
         Id = id;
         Name = name;

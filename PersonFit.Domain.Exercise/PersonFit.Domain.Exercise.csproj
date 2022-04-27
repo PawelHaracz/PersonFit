@@ -10,13 +10,15 @@
     <ItemGroup>
       <ProjectReference Include="..\PersonFit.Core\PersonFit.Core.csproj" />
     </ItemGroup>
-
+    
+    
     <ItemGroup>
         <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     </ItemGroup>
-
     <ItemGroup>
-      <Folder Include="Application" />
-      <Folder Include="Infrastructure" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Infrastructure\Exceptions" />
     </ItemGroup>
 </Project>
