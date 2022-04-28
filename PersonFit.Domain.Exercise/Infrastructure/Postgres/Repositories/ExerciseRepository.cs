@@ -1,38 +1,27 @@
+
+
 namespace PersonFit.Domain.Exercise.Infrastructure.Postgres.Repositories;
 using PersonFit.Core;
 using Documents;
+using PersonFit.Domain.Exercise.Core.Repositories;
 
-internal class ExerciseDomainRepository : IDomainRepository<Core.Entities.Exercise>
+internal class ExerciseDomainRepository : IExerciseRepository
 {
-    private readonly IPostgresRepository<ExerciseDocument, Guid> _repositoryActor;
+    private readonly IPostgresRepository<ExerciseDocument, Guid> _postgresRepository;
 
-    public ExerciseDomainRepository(IPostgresRepository<ExerciseDocument, Guid> repositoryActor)
+    public ExerciseDomainRepository(IPostgresRepository<ExerciseDocument, Guid> postgresRepository)
     {
-        _repositoryActor = repositoryActor;
-    }
-    public Task<Core.Entities.Exercise> GetAsync(AggregateId id)
-    {
-        throw new NotImplementedException();
+        _postgresRepository = postgresRepository;
     }
 
-    public Task<bool> ExistsAsync(AggregateId id)
+    public async Task<bool> Exist(string name, CancellationToken token)
     {
-        throw new NotImplementedException();
+        var value = await _postgresRepository.ExistsAsync(i => i.Name == name, token);
+        return value;
     }
 
-    public Task AddAsync(Core.Entities.Exercise resource)
+    public async Task Create(Core.Entities.Exercise exercise, CancellationToken token)
     {
-        throw new NotImplementedException();
+        await _postgresRepository.AddAsync(exercise.AsDocument(), token);
     }
-
-    public Task UpdateAsync(Core.Entities.Exercise resource)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteAsync(AggregateId id)
-    {
-        throw new NotImplementedException();
-    }
-    
 }
