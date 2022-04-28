@@ -1,5 +1,4 @@
-using PersonFit.Domain.Exercise.Application.Exceptions;
-using Shouldly;
+
 
 namespace PersonFit.Domain.Exercise.Tests.Commands.Exercise;
 using System;
@@ -14,7 +13,8 @@ using Core.Repositories;
 using Xunit;
 using System.Collections.Generic;
 using Extensions;
-
+using Application.Exceptions;
+using Shouldly;
 public class AddExerciseCommandTests
 {
     
