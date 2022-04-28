@@ -1,6 +1,6 @@
 namespace PersonFit.Domain.Exercise.Core.Enums;
 
-internal enum MediaContentType
+public enum MediaContentType
 {
     Video,
     Image

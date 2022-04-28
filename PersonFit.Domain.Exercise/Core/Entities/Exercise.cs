@@ -4,7 +4,7 @@ using PersonFit.Domain.Exercise.Core.ValueObjects;
 
 namespace PersonFit.Domain.Exercise.Core.Entities;
 
-internal sealed class Exercise : AggregateRoot, IAggregateRoot
+public sealed class Exercise : AggregateRoot, IAggregateRoot
 {
     private ISet<MediaContent> _contents = new HashSet<MediaContent>();
     private ISet<string> _tags = new HashSet<string>();
@@ -33,7 +33,7 @@ internal sealed class Exercise : AggregateRoot, IAggregateRoot
         Tags = tags;
     }
     
-    public static Exercise Create(Guid id, string name, string description, string[] tags)
+    public static Exercise Create(AggregateId id, string name, string description, string[] tags)
     {
         var tagsArray = tags.ToArray();
         var exercise = new Exercise(id, name, description, Enumerable.Empty<string>(),Enumerable.Empty<MediaContent>());

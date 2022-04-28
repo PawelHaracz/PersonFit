@@ -41,5 +41,9 @@ public struct AggregateId : IEquatable<AggregateId>
     public static implicit operator AggregateId(Guid id)
         => new AggregateId(id);
 
+    public static bool operator ==(AggregateId first, AggregateId second) => first.Equals(second);
+
+    public static bool operator !=(AggregateId first, AggregateId second) => !(first == second);
+
     public override string ToString() => Value.ToString();
 }

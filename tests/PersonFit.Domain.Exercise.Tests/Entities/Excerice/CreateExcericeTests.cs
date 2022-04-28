@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using PersonFit.Core;
+using PersonFit.Core.Exceptions;
 using Shouldly;
 using Xunit;
 
@@ -8,6 +9,18 @@ namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
 
 public class CreateExerciseTests
 {
+    [Fact]
+    public void given_empty_id_should_throw_exception()
+    {
+        var id = new Guid();
+        var name = "plank";
+        var description = "The plank is an isometric core strength exercise that involves maintaining a position similar to a push-up for the maximum possible time.";
+        
+        var exception =  Record.Exception( () => Core.Entities.Exercise.Create(id, name, description, Array.Empty<string>()));
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<InvalidAggregateIdException>();
+    }
+    
     [Fact]
     public void given_valid_id_name_description_should_be_created()
     {

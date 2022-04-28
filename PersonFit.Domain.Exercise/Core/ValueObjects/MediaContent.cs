@@ -2,7 +2,7 @@ using PersonFit.Domain.Exercise.Core.Enums;
 
 namespace PersonFit.Domain.Exercise.Core.ValueObjects;
 
-internal struct MediaContent: IEquatable<MediaContent>
+public struct MediaContent: IEquatable<MediaContent>
 {
     public string Url { get; }
     public MediaContentType Type { get; }

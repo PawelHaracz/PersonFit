@@ -22,7 +22,7 @@ internal class AddExerciseCommandHandler: ICommandHandler<AddExerciseCommand>
             throw new ExerciseAlreadyCreatedException(command.Name);
         }
         var tags = command.Tags is not null ? command.Tags.ToArray() : Array.Empty<string>();
-        var exercise = Core.Entities.Exercise.Create(Guid.NewGuid(), command.Name, command.Description, tags);
+        var exercise = Core.Entities.Exercise.Create(command.Id, command.Name, command.Description, tags);
 
         await _domainRepository.Create(exercise, token);
         await _eventProcessor.ProcessAsync(exercise.Events);
