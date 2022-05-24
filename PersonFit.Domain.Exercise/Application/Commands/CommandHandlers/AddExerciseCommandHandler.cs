@@ -1,8 +1,8 @@
-using PersonFit.Domain.Exercise.Application.Exceptions;
-
 namespace PersonFit.Domain.Exercise.Application.Commands.CommandHandlers;
 using PersonFit.Core;
 using Core.Repositories;
+using Exceptions;
+
 internal class AddExerciseCommandHandler: ICommandHandler<AddExerciseCommand>
 {
     private readonly IExerciseRepository _domainRepository;
@@ -25,6 +25,6 @@ internal class AddExerciseCommandHandler: ICommandHandler<AddExerciseCommand>
         var exercise = Core.Entities.Exercise.Create(command.Id, command.Name, command.Description, tags);
 
         await _domainRepository.Create(exercise, token);
-        await _eventProcessor.ProcessAsync(exercise.Events);
+        await _eventProcessor.ProcessAsync(exercise.Events, token);
     }
 }
