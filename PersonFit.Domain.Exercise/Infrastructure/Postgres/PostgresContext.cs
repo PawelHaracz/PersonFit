@@ -7,11 +7,13 @@ namespace PersonFit.Domain.Exercise.Infrastructure.Postgres;
 
 internal class PostgresContext : DbContext
 {
+    private readonly ILoggerFactory _loggerFactory;
     public virtual DbSet<ExerciseDocument> Exercises { get; private set; }
     private readonly DbSetting _setting;
     
-    public PostgresContext(IOptions<DbSetting> options)
+    public PostgresContext(IOptions<DbSetting> options, ILoggerFactory loggerFactory)
     {
+        _loggerFactory = loggerFactory;
         if (options.Value is not null)
         {
             _setting = options.Value;
@@ -23,6 +25,7 @@ internal class PostgresContext : DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.UseLoggerFactory(_loggerFactory);
         optionsBuilder.UseNpgsql(_setting.ToString());
         base.OnConfiguring(optionsBuilder);
         
