@@ -1,9 +1,6 @@
-
-
-using Dapr.Client;
-
 namespace PersonFit.Domain.Exercise.Infrastructure.Events;
 using PersonFit.Core;
+using Dapr.Client;
 
 internal class MessageBroker : IMessageBroker
 {
@@ -16,9 +13,9 @@ internal class MessageBroker : IMessageBroker
         _logger = logger;
     }
     
-    public Task PublishAsync(params IEvent[] events) => PublishAsync(events?.AsEnumerable(), CancellationToken.None);
+    public Task PublishAsync(params IntegrationEvent[] events) => PublishAsync(events?.AsEnumerable(), CancellationToken.None);
 
-    public async Task PublishAsync(IEnumerable<IEvent> events, CancellationToken token = default)
+    public async Task PublishAsync(IEnumerable<IntegrationEvent> events, CancellationToken token = default)
     {
         if (events is null)
         {
@@ -31,10 +28,10 @@ internal class MessageBroker : IMessageBroker
             {
                 continue;
             }
-            _logger.LogTrace("publishing event {@event}", @event.Id);
+            _logger.LogTrace("publishing event {@event}", @event.Event.Id);
             // todo improve generic topicname and metadata
-            await _daprClient.PublishEventAsync("pubsub", "Exercise", @event, new Dictionary<string, string>() { }, token);
-            _logger.LogTrace("published event {@event}", @event.Id);
+            //await _daprClient.PublishEventAsync("pubsub", @event.TopicName, @event, new Dictionary<string, string>() { }, token);
+            _logger.LogTrace("published event {@event}", @event.Event.Id);
         }
     }
 }

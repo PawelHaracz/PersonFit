@@ -17,6 +17,7 @@ internal static class Extensions
         => new ()
         {
             Id = entity.Id,
+            Name = entity.Name,
             Description = entity.Description,
             Tags = entity.Tags,
             Version = entity.Version,

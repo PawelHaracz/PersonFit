@@ -2,6 +2,6 @@ namespace PersonFit.Core;
 
 public interface IMessageBroker
 {
-    Task PublishAsync(params IEvent[] events);
-    Task PublishAsync(IEnumerable<IEvent> events, CancellationToken token);
+    Task PublishAsync(params IntegrationEvent[] events);
+    Task PublishAsync(IEnumerable<IntegrationEvent> events, CancellationToken token);
 }

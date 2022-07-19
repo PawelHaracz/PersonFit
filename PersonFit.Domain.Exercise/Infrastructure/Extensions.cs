@@ -1,10 +1,8 @@
-using Microsoft.EntityFrameworkCore;
 using PersonFit.Core;
 using PersonFit.Domain.Exercise.Core.Repositories;
 using PersonFit.Domain.Exercise.Infrastructure.Postgres;
 using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
 using PersonFit.Domain.Exercise.Infrastructure.Postgres.Repositories;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using PersonFit.Domain.Exercise.Application.Commands;
 using PersonFit.Domain.Exercise.Application.Commands.CommandHandlers;
@@ -12,10 +10,6 @@ using PersonFit.Domain.Exercise.Infrastructure.Dispatchers;
 using PersonFit.Domain.Exercise.Infrastructure.Events;
 using PersonFit.Domain.Exercise.Infrastructure.Postgres.Options;
 using Serilog;
-using Serilog.Core;
-using Serilog.Enrichers.Span;
-using Serilog.Formatting.Compact;
-using Serilog.Sinks.ILogger;
 
 namespace PersonFit.Domain.Exercise.Infrastructure;
 
@@ -58,7 +52,6 @@ public static class Extensions
 
     public static WebApplication UseInfrastructure(this WebApplication webApplication)
     {
-   
         webApplication.UseSerilogRequestLogging();
         return webApplication;
     }

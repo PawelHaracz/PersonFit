@@ -36,9 +36,9 @@ internal class EventProcessor: IEventProcessor
         await _messageBroker.PublishAsync(integrationEvents, token);
     }
 
-    private async Task<List<IEvent>> HandleDomainEvents(IEnumerable<IDomainEvent> events)
+    private async Task<IEnumerable<IntegrationEvent>> HandleDomainEvents(IEnumerable<IDomainEvent> events)
     {
-        var integrationEvents = new List<IEvent>();
+        var integrationEvents = new List<IntegrationEvent>();
         using var scope = _serviceScopeFactory.CreateScope();
         foreach (var @event in events)
         {
@@ -55,10 +55,6 @@ internal class EventProcessor: IEventProcessor
              }
 
             var integrationEvent = _eventMapper.Map(@event);
-            if (integrationEvent is null)
-            {
-                continue;
-            }
 
             integrationEvents.Add(integrationEvent);
         }
