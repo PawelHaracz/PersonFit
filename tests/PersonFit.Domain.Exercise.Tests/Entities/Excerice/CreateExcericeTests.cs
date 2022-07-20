@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using PersonFit.Core;
+using PersonFit.Core.Aggregations;
 using PersonFit.Core.Exceptions;
 using Shouldly;
 using Xunit;

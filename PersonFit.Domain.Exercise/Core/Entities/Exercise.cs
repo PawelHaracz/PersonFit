@@ -1,4 +1,5 @@
 ﻿using PersonFit.Core;
+using PersonFit.Core.Aggregations;
 using PersonFit.Domain.Exercise.Core.Events;
 using PersonFit.Domain.Exercise.Core.ValueObjects;
 

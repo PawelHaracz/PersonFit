@@ -1,3 +1,6 @@
+using PersonFit.Core.Commands;
+using PersonFit.Core.Events;
+
 namespace PersonFit.Domain.Exercise.Application.Commands.CommandHandlers;
 using PersonFit.Core;
 using Core.Repositories;
@@ -16,6 +19,7 @@ internal class AddExerciseCommandHandler: ICommandHandler<AddExerciseCommand>
     
     public async Task HandleAsync(AddExerciseCommand command, CancellationToken token = default)
     {
+        ///Add Transaction
         var hasExist = await _domainRepository.Exist(command.Name, token);
         if (hasExist)
         {

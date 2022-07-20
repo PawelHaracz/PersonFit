@@ -1,24 +1,23 @@
-using PersonFit.Core;
-using PersonFit.Domain.Exercise.Core.Repositories;
-using PersonFit.Domain.Exercise.Infrastructure.Postgres;
-using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
-using PersonFit.Domain.Exercise.Infrastructure.Postgres.Repositories;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
-using PersonFit.Domain.Exercise.Application.Commands;
-using PersonFit.Domain.Exercise.Application.Commands.CommandHandlers;
-using PersonFit.Domain.Exercise.Infrastructure.Dispatchers;
-using PersonFit.Domain.Exercise.Infrastructure.Events;
-using PersonFit.Domain.Exercise.Infrastructure.Postgres.Options;
+using PersonFit.Core.Commands;
+using PersonFit.Core.Events;
+using PersonFit.Infrastructure.Dispatchers;
+using PersonFit.Infrastructure.Events;
+using PersonFit.Infrastructure.Postgres.Options;
 using Serilog;
 
-namespace PersonFit.Domain.Exercise.Infrastructure;
+namespace PersonFit.Infrastructure;
 
 public static class Extensions
 {
     public static WebApplicationBuilder AddInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<ICommandDispatcher, CommandDispatcher>();
-        builder.Services.AddScoped<ICommandHandler<AddExerciseCommand>, AddExerciseCommandHandler>();
+       
         
         builder.Services.AddLogging(loggingBuilder =>
         {
@@ -39,17 +38,14 @@ public static class Extensions
 
         builder.Services.AddOptions<DbSetting>().Configure<IConfiguration>((setting, configuration) =>
             configuration.GetSection("postgres").Bind(setting));
-        builder.Services.AddDbContext<PostgresContext>();
-        builder.Services.AddScoped<IPostgresRepository<ExerciseDocument, Guid>, PostgresRepository>();
-        builder.Services.AddScoped<IExerciseRepository, ExerciseDomainRepository>();
-        
-        builder.Services.AddDaprClient();
+
         builder.Services.AddScoped<IEventMapper, EventMapper>();
         builder.Services.AddScoped<IEventProcessor, EventProcessor>();
         builder.Services.AddScoped<IMessageBroker, MessageBroker>();
+
         return builder;
     }
-
+    
     public static WebApplication UseInfrastructure(this WebApplication webApplication)
     {
         webApplication.UseSerilogRequestLogging();

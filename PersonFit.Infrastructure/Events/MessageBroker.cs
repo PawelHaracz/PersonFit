@@ -1,15 +1,13 @@
-namespace PersonFit.Domain.Exercise.Infrastructure.Events;
-using PersonFit.Core;
-using Dapr.Client;
+namespace PersonFit.Infrastructure.Events;
 
+using Microsoft.Extensions.Logging;
+using PersonFit.Core.Events;
 internal class MessageBroker : IMessageBroker
 {
-    private readonly DaprClient _daprClient;
     private readonly ILogger<MessageBroker> _logger;
 
-    public MessageBroker(DaprClient daprClient, ILogger<MessageBroker> logger)
+    public MessageBroker(ILogger<MessageBroker> logger)
     {
-        _daprClient = daprClient;
         _logger = logger;
     }
     

@@ -1,3 +1,6 @@
+using PersonFit.Core.Aggregations;
+using PersonFit.Core.Events;
+
 namespace PersonFit.Domain.Exercise.Tests.Commands.Exercise;
 using System;
 using System.Linq;

@@ -1,4 +1,5 @@
 using PersonFit.Core;
+using PersonFit.Core.Commands;
 
 namespace PersonFit.Domain.Exercise.Application.Commands;
 

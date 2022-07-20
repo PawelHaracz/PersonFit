@@ -1,4 +1,4 @@
-namespace PersonFit.Core;
+namespace PersonFit.Core.Events;
 
 public interface IEventMapper
 {

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using PersonFit.Core;
+using PersonFit.Core.Aggregations;
 using PersonFit.Domain.Exercise.Core.Enums;
 using PersonFit.Domain.Exercise.Core.ValueObjects;
 using Shouldly;
