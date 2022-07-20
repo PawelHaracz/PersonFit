@@ -1,4 +1,4 @@
-namespace PersonFit.Domain.Exercise.Infrastructure.Exceptions;
+namespace PersonFit.Infrastructure.Exceptions;
 
 public abstract class InfraException: Exception
 {

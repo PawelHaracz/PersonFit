@@ -10,11 +10,11 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="Dapr.AspNetCore" Version="1.7.0" />
+      <ProjectReference Include="..\PersonFit.Application\PersonFit.Application.csproj" />
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\PersonFit.Application\PersonFit.Application.csproj" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
     </ItemGroup>
     
 </Project>

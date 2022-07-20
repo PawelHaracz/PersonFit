@@ -1,3 +1,5 @@
+using PersonFit.Core.Aggregations;
+
 namespace PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
 using System.ComponentModel.DataAnnotations.Schema;
 using PersonFit.Core;

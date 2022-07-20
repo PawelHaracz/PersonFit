@@ -5,11 +5,11 @@ using PersonFit.Core;
 using Exceptions;
 using Documents;
 
-internal class PostgresRepository : IPostgresRepository<ExerciseDocument, Guid>
+internal class ExercisePostgresRepository : IPostgresRepository<ExerciseDocument, Guid>
 {
     private readonly PostgresContext _context;
 
-    public PostgresRepository(PostgresContext context)
+    public ExercisePostgresRepository(PostgresContext context)
     {
         _context = context;
     }

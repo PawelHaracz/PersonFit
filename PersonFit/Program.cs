@@ -1,9 +1,7 @@
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDaprClient();
-
-var app = builder.Build();
-
-
-app.MapGet("/", () => "Hello World!");
-
-app.Run();
+using PersonFit;
+var cts = new CancellationTokenSource();
+await WebApplication
+    .CreateBuilder(args)
+    .AddWeb()
+    .UseWeb()
+    .RunAsync(cts.Token);

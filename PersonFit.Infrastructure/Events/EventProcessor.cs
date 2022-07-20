@@ -1,7 +1,7 @@
-using Dapr.Client;
-using PersonFit.Core;
-
-namespace PersonFit.Domain.Exercise.Infrastructure.Events;
+namespace PersonFit.Infrastructure.Events;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using PersonFit.Core.Events;
 
 internal class EventProcessor: IEventProcessor
 {
@@ -56,6 +56,10 @@ internal class EventProcessor: IEventProcessor
 
             var integrationEvent = _eventMapper.Map(@event);
 
+            if (integrationEvent == IntegrationEvent.Empty)
+            {
+                continue;
+            }
             integrationEvents.Add(integrationEvent);
         }
 

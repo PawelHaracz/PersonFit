@@ -1,4 +1,4 @@
-namespace PersonFit.Domain.Exercise.Infrastructure.Postgres.Options;
+namespace PersonFit.Infrastructure.Postgres.Options;
 
 public class DbSetting
 {

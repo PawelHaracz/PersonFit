@@ -1,9 +1,10 @@
+namespace PersonFit.Domain.Exercise.Infrastructure.Postgres;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
-using PersonFit.Domain.Exercise.Infrastructure.Postgres.Options;
-
-namespace PersonFit.Domain.Exercise.Infrastructure.Postgres;
+using Documents;
+using PersonFit.Infrastructure.Postgres.Options;
+using Microsoft.Extensions.Logging;
 
 internal class PostgresContext : DbContext
 {
@@ -28,6 +29,5 @@ internal class PostgresContext : DbContext
         optionsBuilder.UseLoggerFactory(_loggerFactory);
         optionsBuilder.UseNpgsql(_setting.ToString());
         base.OnConfiguring(optionsBuilder);
-        
     }
 }

@@ -1,3 +1,5 @@
+using PersonFit.Infrastructure.Exceptions;
+
 namespace PersonFit.Domain.Exercise.Infrastructure.Exceptions;
 
 internal class ExerciseNotExistDatabaseException : InfraException
