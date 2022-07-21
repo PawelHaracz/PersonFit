@@ -59,4 +59,11 @@ internal class ExercisePostgresRepository : IPostgresRepository<ExerciseDocument
         var exercise = await GetAsync(predicate, token);
         return exercise is not null;
     }
+
+    public async Task< IEnumerable<ExerciseDocument>> Get(Expression<Func<ExerciseDocument, bool>> predicate, CancellationToken token = default)
+    {
+        var list = await _context.Exercises.Where(predicate).ToListAsync(token);
+
+        return list;
+    }
 }

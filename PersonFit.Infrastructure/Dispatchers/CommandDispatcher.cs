@@ -1,7 +1,5 @@
-using System.Transactions;
-using System.Windows.Input;
-
 namespace PersonFit.Infrastructure.Dispatchers;
+using System.Transactions;
 using Microsoft.Extensions.DependencyInjection;
 using Core.Commands;
 internal class CommandDispatcher: ICommandDispatcher
@@ -18,12 +16,14 @@ internal class CommandDispatcher: ICommandDispatcher
     {
         using var transactionScope = new TransactionScope(
             TransactionScopeOption.Required,
-            new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted });
+            new TransactionOptions
+            {
+                IsolationLevel = IsolationLevel.ReadCommitted,
+            }, 
+            TransactionScopeAsyncFlowOption.Enabled);
         
         await using var scope = _serviceScopeFactory.CreateAsyncScope();
         await scope.ServiceProvider.GetRequiredService<ICommandHandler<T>>().HandleAsync(command, token);
         transactionScope.Complete();
-    
-        
     }
 }

@@ -1,5 +1,3 @@
-
-
 namespace PersonFit.Domain.Exercise.Infrastructure.Postgres.Repositories;
 using PersonFit.Core;
 using Documents;
@@ -23,5 +21,11 @@ internal class ExerciseDomainRepository : IExerciseRepository
     public async Task Create(Core.Entities.Exercise exercise, CancellationToken token)
     {
         await _postgresRepository.AddAsync(exercise.AsDocument(), token);
+    }
+
+    public async Task<IEnumerable<Core.Entities.Exercise>> Get(CancellationToken token)
+    {
+        var value = await _postgresRepository.Get(document => true, token);
+        return value.Select(document => document.AsEntity());
     }
 }

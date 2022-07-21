@@ -1,10 +1,14 @@
-using PersonFit.Domain.Exercise.Core.Enums;
-using PersonFit.Domain.Exercise.Core.ValueObjects;
-
 namespace PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
+using Core.Enums;
+using Core.ValueObjects;
 
 internal static class Extensions
 {
+    public static Application.Dtos.ExerciseDto AsDto(this Core.Entities.Exercise document)
+        => new(document.Id,
+            document.Name,
+            document.Tags);
+    
     public static Core.Entities.Exercise AsEntity(this ExerciseDocument document)
         => new(document.Id,
             document.Name,

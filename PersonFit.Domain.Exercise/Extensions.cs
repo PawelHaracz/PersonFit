@@ -1,14 +1,6 @@
-
-
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using PersonFit.Domain.Exercise.Api.Dtos.Queries;
 
 namespace PersonFit.Domain.Exercise;
-
 using PersonFit.Core;
 using PersonFit.Core.Commands;
 using Application.Commands;
@@ -17,7 +9,17 @@ using Core.Repositories;
 using Infrastructure.Postgres;
 using Infrastructure.Postgres.Documents;
 using Infrastructure.Postgres.Repositories;
-using Api.Dtos;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using PersonFit.Core.Queries;
+using Api.Dtos.Commands;
+using Application.Dtos;
+using Application.Queries;
+using Application.Queries.QueryHandlers;
+
 public static class Extensions
 {
     public static WebApplicationBuilder RegisterExerciseDomain(this WebApplicationBuilder builder)
@@ -25,6 +27,9 @@ public static class Extensions
         builder.Services.AddDbContext<PostgresContext>();
         
         builder.Services.AddScoped<ICommandHandler<AddExerciseCommand>, AddExerciseCommandHandler>();
+
+        builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, PagedResult<ExerciseDto>>, GetExercisesQueryHandler>();
+        
         builder.Services.AddScoped<IPostgresRepository<ExerciseDocument, Guid>, ExercisePostgresRepository>();
         builder.Services.AddScoped<IExerciseRepository, ExerciseDomainRepository>();
         
@@ -43,6 +48,12 @@ public static class Extensions
                 context.Database.Migrate();
             }
         }
+        
+        app.MapGet("/exercise", async (HttpContext context ,  CancellationToken token, IQueryDispatcher dispatcher) =>
+        {
+            var query = await dispatcher.QueryAsync(new GetExercisesQuery(), token);
+            return Results.Ok(query);
+        });
         
         app.MapPut("/exercise", async (AddExerciseCommandDto dto, CancellationToken token, ICommandDispatcher dispatcher) =>
         {
