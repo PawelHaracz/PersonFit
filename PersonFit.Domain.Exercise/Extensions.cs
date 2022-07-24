@@ -28,10 +28,11 @@ public static class Extensions
         
         builder.Services.AddScoped<ICommandHandler<AddExerciseCommand>, AddExerciseCommandHandler>();
 
-        builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, PagedResult<ExerciseDto>>, GetExercisesQueryHandler>();
+        builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, IEnumerable<ExerciseDto>>, GetExercisesQueryHandler>();
         
         builder.Services.AddScoped<IPostgresRepository<ExerciseDocument, Guid>, ExercisePostgresRepository>();
         builder.Services.AddScoped<IExerciseRepository, ExerciseDomainRepository>();
+        builder.Services.AddScoped<IReadExerciseRepository, ReadExerciseRepository>();
         
         return builder;
     }

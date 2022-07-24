@@ -1,14 +1,11 @@
+namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
 using System;
 using System.Linq;
-using PersonFit.Core;
 using PersonFit.Core.Aggregations;
-using PersonFit.Domain.Exercise.Core.Enums;
-using PersonFit.Domain.Exercise.Core.ValueObjects;
+using Core.Enums;
+using Core.ValueObjects;
 using Shouldly;
 using Xunit;
-
-namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
-
 public class AddContentTests
 {
     [Fact]
