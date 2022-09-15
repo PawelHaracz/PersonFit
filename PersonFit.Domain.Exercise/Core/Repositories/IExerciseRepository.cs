@@ -1,6 +1,6 @@
 namespace PersonFit.Domain.Exercise.Core.Repositories;
 
-public interface IExerciseRepository
+internal interface IExerciseRepository
 {
     Task<bool> Exist(string name, CancellationToken token);
 

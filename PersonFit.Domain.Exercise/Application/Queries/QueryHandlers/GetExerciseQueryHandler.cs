@@ -4,7 +4,7 @@ using Dtos;
 using Core.Repositories;
 using Infrastructure.Postgres.Documents;
 
-public class GetExerciseQueryHandler : IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>
+internal class GetExerciseQueryHandler : IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>
 {
     private readonly IReadExerciseRepository _domainRepository;
 

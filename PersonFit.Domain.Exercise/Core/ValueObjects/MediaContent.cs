@@ -1,8 +1,7 @@
-using PersonFit.Domain.Exercise.Core.Enums;
-
 namespace PersonFit.Domain.Exercise.Core.ValueObjects;
+using Enums;
 
-public struct MediaContent: IEquatable<MediaContent>
+internal readonly struct MediaContent: IEquatable<MediaContent>
 {
     public string Url { get; }
     public MediaContentType Type { get; }
