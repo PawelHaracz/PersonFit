@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Microsoft.VisualBasic;
-using NSubstitute;
-using NSubstitute.ReceivedExtensions;
-using PersonFit.Domain.Exercise.Application.Queries;
-using PersonFit.Domain.Exercise.Application.Queries.QueryHandlers;
-using PersonFit.Domain.Exercise.Core.Repositories;
-using PersonFit.Domain.Exercise.Core.ValueObjects;
-using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
-using Shouldly;
-using Xunit;
-
 namespace PersonFit.Domain.Exercise.Tests.Queries;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
+using System.Threading;
+using NSubstitute;
+using PersonFit.Domain.Exercise.Application.Queries;
+using PersonFit.Domain.Exercise.Application.Queries.QueryHandlers;
+using Core.Repositories;
+using Core.ValueObjects;
+using Infrastructure.Postgres.Documents;
+using Shouldly;
+using Xunit;
 
 public class GetExercisesQueryHandlerTests
 {
@@ -41,7 +37,7 @@ public class GetExercisesQueryHandlerTests
         
         var act = await _handler.HandleAsync(command, token);
         
-        _readExerciseRepository.Received(1).GetAll(Arg.Is(token)); //Ignore this warning, beacue method is never called there only Assert
+        _readExerciseRepository.Received(1).GetAll(Arg.Is(token)); //Ignore this warning, because method is never called there only Assert
         act.ShouldBeEmpty();
     }
 

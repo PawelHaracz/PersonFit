@@ -29,6 +29,7 @@ public static class Extensions
         builder.Services.AddScoped<ICommandHandler<AddExerciseCommand>, AddExerciseCommandHandler>();
 
         builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, IEnumerable<ExerciseDto>>, GetExercisesQueryHandler>();
+        builder.Services.AddScoped<IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>, GetExerciseQueryHandler>();
         
         builder.Services.AddScoped<IPostgresRepository<ExerciseDocument, Guid>, ExercisePostgresRepository>();
         builder.Services.AddScoped<IExerciseRepository, ExerciseDomainRepository>();
@@ -53,6 +54,12 @@ public static class Extensions
         app.MapGet("/exercise", async (HttpContext context ,  CancellationToken token, IQueryDispatcher dispatcher) =>
         {
             var query = await dispatcher.QueryAsync(new GetExercisesQuery(), token);
+            return Results.Ok(query);
+        });
+        
+        app.MapGet("/exercise/{id:guid}", async (HttpContext context ,  CancellationToken token, Guid id, IQueryDispatcher dispatcher) =>
+        {
+            var query = await dispatcher.QueryAsync(new GetExerciseQuery(id), token);
             return Results.Ok(query);
         });
         
