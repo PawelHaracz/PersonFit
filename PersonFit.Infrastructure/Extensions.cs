@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
+using PersonFit.Core.Queries;
 using PersonFit.Infrastructure.Dispatchers;
 using PersonFit.Infrastructure.Events;
 using PersonFit.Infrastructure.Postgres.Options;
@@ -16,8 +17,8 @@ public static class Extensions
 {
     public static WebApplicationBuilder AddInfrastructure(this WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<ICommandDispatcher, CommandDispatcher>();
-       
+        builder.Services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
+        builder.Services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
         
         builder.Services.AddLogging(loggingBuilder =>
         {

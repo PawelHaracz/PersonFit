@@ -10,4 +10,8 @@ public interface IPostgresRepository<TEntity, in TIdentifiable> where TEntity: I
     Task UpdateAsync(TEntity entity, CancellationToken token = default);
     Task DeleteAsync(TIdentifiable id, CancellationToken token = default);
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken token = default);
+    Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken token = default);
+    IQueryable<TEntity> Get();
+    IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> predicate);
 }

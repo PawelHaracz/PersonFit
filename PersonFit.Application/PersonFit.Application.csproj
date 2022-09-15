@@ -10,8 +10,4 @@
       <ProjectReference Include="..\PersonFit.Domain.Exercise\PersonFit.Domain.Exercise.csproj" />
       <ProjectReference Include="..\PersonFit.Infrastructure\PersonFit.Infrastructure.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
-    </ItemGroup>
 </Project>

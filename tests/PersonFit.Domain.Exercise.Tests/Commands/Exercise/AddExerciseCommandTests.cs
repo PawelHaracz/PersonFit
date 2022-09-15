@@ -1,6 +1,3 @@
-using PersonFit.Core.Aggregations;
-using PersonFit.Core.Events;
-
 namespace PersonFit.Domain.Exercise.Tests.Commands.Exercise;
 using System;
 using System.Linq;
@@ -9,13 +6,15 @@ using System.Threading.Tasks;
 using PersonFit.Domain.Exercise.Application.Commands;
 using PersonFit.Domain.Exercise.Application.Commands.CommandHandlers;
 using NSubstitute;
-using PersonFit.Core;
 using Core.Repositories;
 using Xunit;
 using System.Collections.Generic;
 using Extensions;
 using Application.Exceptions;
 using Shouldly;
+using PersonFit.Core.Aggregations;
+using PersonFit.Core.Events;
+
 public class AddExerciseCommandTests
 {
     
@@ -27,7 +26,7 @@ public class AddExerciseCommandTests
         var exercise = Core.Entities.Exercise.Create(command.Id, command.Name, command.Description, command.Tags.ToArray());
         
         await _handler.HandleAsync(command, cancellationToken);
-        
+
         await _repository.Received(1).Create(Arg.Is<Core.Entities.Exercise>(e => 
             e.Compare( exercise)), cancellationToken);
         await _eventProcessor.Received().ProcessAsync(Arg.Is<IEnumerable<IDomainEvent>>(

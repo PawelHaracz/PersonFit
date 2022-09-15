@@ -1,12 +1,10 @@
+namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PersonFit.Core;
 using PersonFit.Core.Aggregations;
 using Shouldly;
 using Xunit;
-
-namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
 
 public class UnassignTagTests
 {

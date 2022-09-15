@@ -21,13 +21,15 @@ internal class ExercisePostgresRepository : IPostgresRepository<ExerciseDocument
         {
             throw new ExerciseNotExistDatabaseException(id);
         }
+
         return exercise;
     }
 
-    public async Task<ExerciseDocument> GetAsync(Expression<Func<ExerciseDocument, bool>> predicate, CancellationToken token = default)
+    public async Task<ExerciseDocument> GetAsync(Expression<Func<ExerciseDocument, bool>> predicate,
+        CancellationToken token = default)
     {
         var exercise = await _context.Exercises.SingleOrDefaultAsync(predicate, token);
-        
+
         return exercise;
     }
 
@@ -50,13 +52,36 @@ internal class ExercisePostgresRepository : IPostgresRepository<ExerciseDocument
         {
             return;
         }
+
         _context.Exercises.Remove(exercise);
         await _context.SaveChangesAsync(token);
     }
 
-    public async Task<bool> ExistsAsync(Expression<Func<ExerciseDocument, bool>> predicate, CancellationToken token = default)
+    public async Task<bool> ExistsAsync(Expression<Func<ExerciseDocument, bool>> predicate,
+        CancellationToken token = default)
     {
         var exercise = await GetAsync(predicate, token);
         return exercise is not null;
     }
+
+    public async Task<IEnumerable<ExerciseDocument>> Get(Expression<Func<ExerciseDocument, bool>> predicate, CancellationToken token = default)
+    {
+        var list = await GetQueryable(predicate).ToListAsync(token);
+
+        return list;
+    }
+
+    public IQueryable<ExerciseDocument> Get() 
+        => _context.Exercises.AsQueryable();
+
+    public IQueryable<ExerciseDocument> GetQueryable(Expression<Func<ExerciseDocument, bool>> predicate)
+    {
+        if (predicate is null)
+        {
+            return Get();
+        }
+        
+        return  _context.Exercises.Where(predicate).AsQueryable();
+    }
 }
+    

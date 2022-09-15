@@ -19,7 +19,6 @@ internal class AddExerciseCommandHandler: ICommandHandler<AddExerciseCommand>
     
     public async Task HandleAsync(AddExerciseCommand command, CancellationToken token = default)
     {
-        ///Add Transaction
         var hasExist = await _domainRepository.Exist(command.Name, token);
         if (hasExist)
         {
