@@ -28,6 +28,10 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
 
     public static PlannerExercise Create(AggregateId id, Guid exerciseId)
     {
+        if (exerciseId == Guid.Empty)
+        {
+            throw new InvalidExerciseIdPlannerExerciseException();
+        }
         var plannerExercise = new PlannerExercise(id, exerciseId, Enumerable.Empty<Repetition>());
         plannerExercise.AddEvent(new PlannerExerciseCreatedEvent(id, exerciseId));
 
@@ -36,9 +40,13 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
 
     public int AddRepetition(int count, MeasurementUnit unit, string note)
     {
+        if (count < 0)
+        {
+            count = 0;
+        }
         var order = _repetitions.Count + 1;
         _repetitions.Add(new Repetition(order, count, unit, note));
-        AddEvent(new AddRepetitionEvent(order, count, unit));
+        AddEvent(new AddedRepetitionEvent(order, count, unit, note));
         return order;
     }
 
@@ -55,18 +63,26 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
         }
 
         _repetitions.Remove(item);
+       
         int newOrder = 1;
-        foreach (var repetition in _repetitions)
+        var newRepetitions = _repetitions.ToArray();
+        _repetitions.Clear();
+        foreach (var repetition in newRepetitions)
         {
             repetition.ChangeOrder(newOrder);
+            _repetitions.Add(repetition);
             newOrder++;
         }
-        AddEvent(new RemoveRepetitionEvent(order));
+        
+        AddEvent(new RemovedRepetitionEvent(order, item.Count,item.Unit, item.Note));
     }
 
     public void ReorderRepetitions(IDictionary<int, int> orderingMapping)
     {
-        foreach (var repetition in _repetitions)
+        var repetitions = _repetitions.ToArray();
+        var tempRepetitions = new List<Repetition>();
+        _repetitions.Clear();
+        foreach (var repetition in repetitions)
         {
             var oldOrder = repetition.Order;
             if (!orderingMapping.ContainsKey(oldOrder))
@@ -75,13 +91,21 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
             }
             var newOrder = orderingMapping[oldOrder];
             
-            if (newOrder < 1 || newOrder > _repetitions.Count + 1)
+            if (newOrder < 1 || newOrder > repetitions.Length + 1)
             {
                 throw new ReorderingExerciseRepetitionException(Id, oldOrder, newOrder);
             }
             
-            repetition.ChangeOrder(newOrder);
-            AddEvent(new ReprderRepetitionEvent(oldOrder, newOrder));
+            if(oldOrder != newOrder)
+            {
+                repetition.ChangeOrder(newOrder);
+                AddEvent(new ReorderRepetitionEvent(oldOrder, newOrder));
+            }
+            tempRepetitions.Add(repetition);
+        }
+        foreach (var repetition in tempRepetitions.OrderBy(r => r.Order))
+        {
+            _repetitions.Add(repetition);
         }
     }
 }

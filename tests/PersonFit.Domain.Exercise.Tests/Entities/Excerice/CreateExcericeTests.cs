@@ -1,5 +1,3 @@
-
-
 namespace PersonFit.Domain.Exercise.Tests.Entities.Excerice;
 using System;
 using System.Linq;
