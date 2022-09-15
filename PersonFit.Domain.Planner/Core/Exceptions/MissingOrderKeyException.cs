@@ -1,7 +1,5 @@
-using PersonFit.Core.Aggregations;
-using PersonFit.Core.Exceptions;
-
 namespace PersonFit.Domain.Planner.Core.Exceptions;
+using PersonFit.Core.Exceptions;
 
 internal class MissingOrderKeyException : DomainException
 {

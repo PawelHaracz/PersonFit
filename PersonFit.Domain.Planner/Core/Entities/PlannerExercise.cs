@@ -11,7 +11,7 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
 
     public IEnumerable<Repetition> Repetitions
     {
-        get => _repetitions;
+        get => _repetitions.AsEnumerable();
         private init => _repetitions = new HashSet<Repetition>(value);
     }
 
