@@ -1,8 +1,3 @@
-
-
-using System.Collections;
-using System.Collections.Generic;
-
 namespace PersonFit.Domain.Planner.Tests.Entities.PlannerExercise;
 using System;
 using PersonFit.Core.Aggregations;
@@ -10,17 +5,18 @@ using Core.Enums;
 using Core.Events;
 using Shouldly;
 using Xunit;
+using System.Collections.Generic;
+using Core.Exceptions;
 
 public class ReorderRepetitionsTests
 {
     [Fact]
     public void given_three_repetition_should_created_in_proper_order()
     {
-        var items = new[]
-        {
-            new { count = 2, unit = MeasurementUnit.Mass, note = string.Empty },
-            new { count = 1, unit = MeasurementUnit.Time, note = "blabla" },
-            new { count = 10, unit = MeasurementUnit.Length, note = string.Empty }
+        (int count, MeasurementUnit unit, string note)[] items = {
+            (count: 2, unit: MeasurementUnit.Mass, note: string.Empty),
+            (count: 1, unit: MeasurementUnit.Time, note: "blabla"),
+            (count: 10, unit: MeasurementUnit.Length, note: string.Empty)
         };
         var reorder = new Dictionary<int, int>
         {
@@ -29,12 +25,8 @@ public class ReorderRepetitionsTests
             [3] = 3
         };
         
-        var planner = Arrange();
-        foreach (var item in items)
-        {
-            planner.AddRepetition(item.count, item.unit, item.note);
-        }
-        
+        var planner = Arrange(items);
+
         planner.ReorderRepetitions(reorder);
 
         Assert.Collection(planner.Repetitions, 
@@ -83,14 +75,9 @@ public class ReorderRepetitionsTests
         );
     }
 
+    [Fact]
     public void given_duplicated_records_should_throw()
     {
-        var items = new[]
-        {
-            new { count = 2, unit = MeasurementUnit.Mass, note = string.Empty },
-            new { count = 1, unit = MeasurementUnit.Time, note = "blabla" },
-            new { count = 10, unit = MeasurementUnit.Length, note = string.Empty }
-        };
         var reorder = new Dictionary<int, int>
         {
             [2] = 1,
@@ -99,19 +86,68 @@ public class ReorderRepetitionsTests
         };
         
         var planner = Arrange();
-        foreach (var item in items)
+
+        var exception = Record.Exception(() => planner.ReorderRepetitions(reorder));
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<WrongOrderingMappingCollectionException>();
+    }
+
+    [Fact]
+    public void given_record_key_out_of_order_should_throw()
+    {
+        var reorder = new Dictionary<int, int>
+        {
+            [2] = 1,
+            [1] = 2,
+            [3] = 4,
+            [4] = 3
+        };
+        
+        var planner = Arrange();
+
+        var exception = Record.Exception(() => planner.ReorderRepetitions(reorder));
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<WrongOrderingMappingCollectionException>();
+    }
+    
+    [Fact]
+    public void given_record_value_out_of_order_should_throw()
+    {
+        var reorder = new Dictionary<int, int>
+        {
+            [2] = 2,
+            [1] = 1,
+            [3] = 4,
+        };
+        
+        var planner = Arrange();
+        var exception = Record.Exception(() => planner.ReorderRepetitions(reorder));
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<ReorderingExerciseRepetitionException>();
+    }
+    
+    private Core.Entities.PlannerExercise Arrange((int count, MeasurementUnit unit, string note)[]? collection = default)
+    {
+        (int count, MeasurementUnit unit, string note)[]? items = {
+            (count: 2, unit: MeasurementUnit.Mass, note: string.Empty),
+            (count: 1, unit: MeasurementUnit.Time, note: "blabla"),
+            (count: 10, unit: MeasurementUnit.Length, note: string.Empty)
+        };
+        
+        if (collection is null)
+        {
+            collection = items;
+        }
+        
+        var id = new AggregateId();
+        var exerciseId = new Guid("FE270C83-EFB5-4414-A86D-98D9E19D7EAD");
+        var planner =  Core.Entities.PlannerExercise.Create(id, exerciseId);
+        
+        foreach (var item in collection)
         {
             planner.AddRepetition(item.count, item.unit, item.note);
         }
         
-        var exception = Record.Exception(() => planner.ReorderRepetitions(reorder));
-        exception.ShouldNotBeNull();
-    }
-    
-    private Core.Entities.PlannerExercise Arrange()
-    {
-        var id = new AggregateId();
-        var exerciseId = new Guid("FE270C83-EFB5-4414-A86D-98D9E19D7EAD");
-        return Core.Entities.PlannerExercise.Create(id, exerciseId);
+        return planner;
     }
 }

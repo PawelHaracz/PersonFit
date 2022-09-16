@@ -79,6 +79,11 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
 
     public void ReorderRepetitions(IDictionary<int, int> orderingMapping)
     {
+        var hasValidated = HasReorderRepetitions(orderingMapping);
+        if (!hasValidated)
+        {
+            throw new WrongOrderingMappingCollectionException(Id, orderingMapping);
+        }
         var repetitions = _repetitions.ToArray();
         var tempRepetitions = new List<Repetition>();
         _repetitions.Clear();
@@ -91,7 +96,7 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
             }
             var newOrder = orderingMapping[oldOrder];
             
-            if (newOrder < 1 || newOrder > repetitions.Length + 1)
+            if (newOrder < 1 || newOrder > repetitions.Length)
             {
                 throw new ReorderingExerciseRepetitionException(Id, oldOrder, newOrder);
             }
@@ -107,5 +112,24 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
         {
             _repetitions.Add(repetition);
         }
+    }
+
+    private bool HasReorderRepetitions(IDictionary<int,int> orderingMapping)
+    {
+        var reservedItems = new List<int>();
+        if (orderingMapping.Keys.Count() - Repetitions.Count() != 0)
+        {
+            return false;
+        }
+        foreach (var i in orderingMapping)
+        {
+            if (reservedItems.Contains(i.Value))
+            {
+                return false;
+            }
+            reservedItems.Add(i.Value);
+        }
+
+        return true;
     }
 }
