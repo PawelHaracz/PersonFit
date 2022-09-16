@@ -1,4 +1,4 @@
 namespace PersonFit.Domain.Planner.Core.Events;
 using PersonFit.Core.Events;
-
-internal record AddedPlannerExercise(Guid PlannerExercise): IDomainEvent {}
+using Enums;
+internal record AddedPlannerExercise(DayOfWeek DayOfWeek, TimeOfDay TimeOfDay, Guid PlannerExercise): IDomainEvent {}

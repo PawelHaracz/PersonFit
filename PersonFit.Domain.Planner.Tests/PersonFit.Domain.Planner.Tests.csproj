@@ -22,10 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Entities\Planner" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\PersonFit.Domain.Planner\PersonFit.Domain.Planner.csproj" />
     </ItemGroup>
 
