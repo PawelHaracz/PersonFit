@@ -88,7 +88,7 @@ public class CreatePlannerTests
         planner.Status.ShouldBe(PlannerStatus.Pending);
         planner.StartTime.ShouldBe(startDate.ToUniversalTime());
         planner.EndTime.ShouldBe(endDate.ToUniversalTime());
-        planner.UserId.ShouldBe(userId);
+        planner.OwnerId.ShouldBe(userId);
         
         Assert.Collection(planner.Events, @event =>
         {
@@ -98,7 +98,7 @@ public class CreatePlannerTests
             p.Status.ShouldBe(PlannerStatus.Pending);
             p.StartTime.ShouldBe(startDate.ToUniversalTime());
             p.EndTime.ShouldBe(endDate.ToUniversalTime());
-            p.UserId.ShouldBe(userId);
+            p.OwnerId.ShouldBe(userId);
         });
     }
 }

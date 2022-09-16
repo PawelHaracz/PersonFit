@@ -1,7 +1,6 @@
-using System.Collections;
-using PersonFit.Domain.Planner.Core.Enums;
-
 namespace PersonFit.Domain.Planner.Core.ValueObjects;
+using Enums;
+
 internal struct DailyPlanner : IEquatable<DailyPlanner>
 {
     public DailyPlanner(DayOfWeek dayOfWeek, TimeOfDay timeOfDay, IEnumerable<Guid> exercisesPlanner)
@@ -18,7 +17,7 @@ internal struct DailyPlanner : IEquatable<DailyPlanner>
     public DayOfWeek DayOfWeek { get; }
     public TimeOfDay TimeOfDay { get; }
 
-    private ISet<Guid> _exercisesPlanner;
+    private readonly ISet<Guid> _exercisesPlanner;
     
     public bool Equals(DailyPlanner other)
     {

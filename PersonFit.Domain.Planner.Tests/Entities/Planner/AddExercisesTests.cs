@@ -1,11 +1,10 @@
+namespace PersonFit.Domain.Planner.Tests.Entities.Planner;
 using System;
-using PersonFit.Domain.Planner.Core.Enums;
-using PersonFit.Domain.Planner.Core.Events;
-using PersonFit.Domain.Planner.Core.ValueObjects;
+using Core.Enums;
+using Core.Events;
+using Core.ValueObjects;
 using Shouldly;
 using Xunit;
-
-namespace PersonFit.Domain.Planner.Tests.Entities.Planner;
 
 public class AddExercisesTests
 {

@@ -7,7 +7,7 @@ using ValueObjects;
 
 internal sealed class Planner: AggregateRoot, IAggregateRoot
 {
-    public Guid UserId { get; private set; }
+    public Guid OwnerId { get; private set; }
     public DateTime StartTime { get; private set; }
     public DateTime EndTime { get; private set; }
     public PlannerStatus Status { get; private set; }
@@ -19,10 +19,10 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
 
     private readonly ISet<DailyPlanner> _dailyPlanners;
 
-    public Planner(Guid id,Guid userId, DateTime startTime, DateTime endTime, PlannerStatus status, IEnumerable<DailyPlanner> dailyPlanners, int version = 0)
+    public Planner(Guid id,Guid ownerId, DateTime startTime, DateTime endTime, PlannerStatus status, IEnumerable<DailyPlanner> dailyPlanners, int version = 0)
     {
         Id = id;
-        UserId = userId;
+        OwnerId = ownerId;
         StartTime = startTime.ToUniversalTime();
         EndTime = endTime.ToUniversalTime();
         DailyPlanners = dailyPlanners;
@@ -30,16 +30,16 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
         Version = version;
     }
 
-    public static Planner Create(Guid id, Guid userId, DateTime startTime, DateTime endTime)
+    public static Planner Create(Guid id, Guid ownerId, DateTime startTime, DateTime endTime)
     {
-        if (userId == default)
+        if (ownerId == default)
         {
             throw new PlannerEmptyUserException();
         } 
-        var status = GetStatusBasedOnTimeRange(userId, startTime, endTime);
+        var status = GetStatusBasedOnTimeRange(ownerId, startTime, endTime);
 
-       var planner = new Planner(id, userId, startTime.ToUniversalTime(), endTime.ToUniversalTime(), status, Enumerable.Empty<DailyPlanner>());
-       planner.AddEvent(new CreatedNewPlannerEvent(id, userId, startTime.ToUniversalTime(), endTime.ToUniversalTime(), status));
+       var planner = new Planner(id, ownerId, startTime.ToUniversalTime(), endTime.ToUniversalTime(), status, Enumerable.Empty<DailyPlanner>());
+       planner.AddEvent(new CreatedNewPlannerEvent(id, ownerId, startTime.ToUniversalTime(), endTime.ToUniversalTime(), status));
 
        return planner;
     }
