@@ -189,6 +189,21 @@ public class AddExercisesTests
             @event => @event.ShouldBeOfType<AddedPlannerExercise>());
     }
 
+    [Fact]
+    public void given_empty__exercises_should_ignore()
+    {
+        
+        var dayOfWeek = DayOfWeek.Thursday;
+        var timeOfDay = TimeOfDay.WholeDay;
+
+        var planner = Arrange();
+        planner.AddExercises(dayOfWeek, timeOfDay, ArraySegment<Guid>.Empty);
+        
+        planner.DailyPlanners.ShouldBeEmpty();
+        Assert.Collection(planner.Events,
+            @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>());
+    }
+
     private Core.Entities.Planner Arrange()
     {
         return Core.Entities.Planner.Create(

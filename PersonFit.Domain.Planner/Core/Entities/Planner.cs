@@ -46,6 +46,11 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
 
     public void AddExercises(DayOfWeek dayOfWeek, TimeOfDay timeOfDay, IEnumerable<Guid> plannerExercises)
     {
+        var exercises = plannerExercises as Guid[] ?? plannerExercises.ToArray();
+        if (!exercises.Any())
+        {
+            return;
+        }
         var item = _dailyPlanners.SingleOrDefault(p => p.DayOfWeek == dayOfWeek && p.TimeOfDay == timeOfDay, DailyPlanner.Default);
         if (item.Equals(DailyPlanner.Default))
         {
@@ -58,7 +63,7 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
         
         var newPlanners = item.ExercisesPlanner.ToList();
         
-        foreach (var plannerExercise in plannerExercises)
+        foreach (var plannerExercise in exercises)
         {
             var hasExists = newPlanners.Contains(plannerExercise) || plannerExercise == Guid.Empty;
             if (hasExists)
@@ -76,6 +81,12 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
     
     public void RemoveExercises(DayOfWeek dayOfWeek, TimeOfDay timeOfDay, IEnumerable<Guid> plannerExercises)
     {
+        var exercises = plannerExercises as Guid[] ?? plannerExercises.ToArray();
+        if (!exercises.Any())
+        {
+            return;
+        }
+        
         var item = _dailyPlanners.SingleOrDefault(p => p.DayOfWeek == dayOfWeek && p.TimeOfDay == timeOfDay, DailyPlanner.Default);
         if (item.Equals(DailyPlanner.Default))
         {
@@ -91,11 +102,14 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
                 continue;
             }
 
-            newPlanners.Add(plannerExercise);
+            newPlanners.Remove(plannerExercise);
             AddEvent(new RemovedPlannerExercise(dayOfWeek, timeOfDay, plannerExercise));
         }
         item.UpdateExercisePlanners(newPlanners);
-        _dailyPlanners.Add(item);
+        if (newPlanners.Any())
+        {
+            _dailyPlanners.Add(item);
+        }
     }
 
     private static PlannerStatus GetStatusBasedOnTimeRange(Guid userId, DateTime startTime, DateTime endTime)
