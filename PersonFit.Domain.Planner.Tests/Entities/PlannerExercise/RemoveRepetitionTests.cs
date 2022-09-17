@@ -97,6 +97,7 @@ public class RemoveRepetitionTests
     {
         var id = new AggregateId();
         var exerciseId = new Guid("AA594AD9-6FA0-428E-9CE5-587FC2E05B2A");
-        return Core.Entities.PlannerExercise.Create(id, exerciseId);
+        var ownerId = new Guid("11209823-9BB1-4AAE-8640-40A41B54D7D4");
+        return Core.Entities.PlannerExercise.Create(id, ownerId, exerciseId);
     }
 }

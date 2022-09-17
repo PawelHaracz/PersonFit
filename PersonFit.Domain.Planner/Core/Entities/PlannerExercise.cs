@@ -8,7 +8,7 @@ using Events;
 internal class PlannerExercise : AggregateRoot, IAggregateRoot
 {
     public Guid ExerciseId { get; private set; }
-
+    public Guid OwnerId { get; private set; } 
     public IEnumerable<Repetition> Repetitions
     {
         get => _repetitions.AsEnumerable();
@@ -18,22 +18,28 @@ internal class PlannerExercise : AggregateRoot, IAggregateRoot
     private readonly ISet<Repetition> _repetitions;
     
 
-    public PlannerExercise(Guid id, Guid exerciseId, IEnumerable<Repetition> repetitions, int version = 0)
+    public PlannerExercise(Guid id, Guid ownerId,  Guid exerciseId, IEnumerable<Repetition> repetitions, int version = 0)
     {
         Id = id;
         ExerciseId = exerciseId;
         Repetitions = repetitions;
+        OwnerId = ownerId;
         Version = version;
     }
 
-    public static PlannerExercise Create(AggregateId id, Guid exerciseId)
+    public static PlannerExercise Create(AggregateId id, Guid ownerId, Guid exerciseId)
     {
         if (exerciseId == Guid.Empty)
         {
             throw new InvalidExerciseIdPlannerExerciseException();
         }
-        var plannerExercise = new PlannerExercise(id, exerciseId, Enumerable.Empty<Repetition>());
-        plannerExercise.AddEvent(new PlannerExerciseCreatedEvent(id, exerciseId));
+
+        if (ownerId == Guid.Empty)
+        {
+            throw new EmptyPlannerExerciseOwnerException(exerciseId);
+        }
+        var plannerExercise = new PlannerExercise(id, ownerId, exerciseId, Enumerable.Empty<Repetition>());
+        plannerExercise.AddEvent(new PlannerExerciseCreatedEvent(id, ownerId, exerciseId));
 
         return plannerExercise;
     }

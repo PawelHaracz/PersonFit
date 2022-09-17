@@ -141,7 +141,8 @@ public class ReorderRepetitionsTests
         
         var id = new AggregateId();
         var exerciseId = new Guid("FE270C83-EFB5-4414-A86D-98D9E19D7EAD");
-        var planner =  Core.Entities.PlannerExercise.Create(id, exerciseId);
+        var ownerId = new Guid("FBD8C356-E44D-4E07-B8E8-4868D2BE89B7");
+        var planner =  Core.Entities.PlannerExercise.Create(id, ownerId, exerciseId);
         
         foreach (var item in collection)
         {

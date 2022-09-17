@@ -17,4 +17,11 @@
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Api" />
+      <Folder Include="Application\Commands" />
+      <Folder Include="Infrastructure" />
+      <Folder Include="Migrations" />
+    </ItemGroup>
+
 </Project>

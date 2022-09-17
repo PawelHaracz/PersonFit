@@ -83,6 +83,7 @@ public class AddRepetitionTests
     {
         var id = new AggregateId();
         var exerciseId = new Guid("FE270C83-EFB5-4414-A86D-98D9E19D7EAD");
-       return Core.Entities.PlannerExercise.Create(id, exerciseId);
+        var ownerId = new Guid("270E456D-B60E-4A97-AB8B-EE726432A9B0");
+       return Core.Entities.PlannerExercise.Create(id, ownerId, exerciseId);
     }
 }
