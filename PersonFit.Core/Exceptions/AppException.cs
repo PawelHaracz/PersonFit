@@ -1,4 +1,4 @@
-namespace PersonFit.Domain.Exercise.Application.Exceptions;
+namespace PersonFit.Core.Exceptions;
 
 public abstract class AppException : Exception
 {

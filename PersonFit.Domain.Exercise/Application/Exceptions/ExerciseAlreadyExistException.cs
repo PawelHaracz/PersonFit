@@ -1,6 +1,8 @@
+using PersonFit.Core.Exceptions;
+
 namespace PersonFit.Domain.Exercise.Application.Exceptions;
 
-public class ExerciseAlreadyCreatedException: AppException
+internal class ExerciseAlreadyCreatedException: AppException
 {
     public override string Code { get; } = "exercise_already_created";
     public string Name { get; }
