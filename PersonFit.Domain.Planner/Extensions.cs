@@ -48,7 +48,7 @@ public static class Extensions
                 var services = scope.ServiceProvider;
 
                 var context = services.GetRequiredService<PostgresPlannerDomainContext>();    
-               // context.Database.Migrate();
+               context.Database.Migrate();
             }
         }
         
