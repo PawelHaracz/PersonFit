@@ -1,5 +1,3 @@
-using PersonFit.Domain.Exercise.Api.Dtos.Queries;
-
 namespace PersonFit.Domain.Exercise;
 using PersonFit.Core;
 using PersonFit.Core.Commands;
@@ -19,19 +17,21 @@ using Api.Dtos.Commands;
 using Application.Dtos;
 using Application.Queries;
 using Application.Queries.QueryHandlers;
+using PersonFit.Infrastructure.Postgres;
 
 public static class Extensions
 {
     public static WebApplicationBuilder RegisterExerciseDomain(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<PostgresContext>();
+        builder.Services.AddDbContext<PostgresExerciseDomainContext>();
         
         builder.Services.AddScoped<ICommandHandler<AddExerciseCommand>, AddExerciseCommandHandler>();
 
         builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, IEnumerable<ExerciseDto>>, GetExercisesQueryHandler>();
         builder.Services.AddScoped<IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>, GetExerciseQueryHandler>();
         
-        builder.Services.AddScoped<IPostgresRepository<ExerciseDocument, Guid>, ExercisePostgresRepository>();
+        builder.Services.AddScoped<IPostgresRepository<ExerciseDocument, Guid>>(
+            provider => new  PostgresDomainRepository<ExerciseDocument>(provider.GetRequiredService<PostgresExerciseDomainContext>()));
         builder.Services.AddScoped<IExerciseRepository, ExerciseDomainRepository>();
         builder.Services.AddScoped<IReadExerciseRepository, ReadExerciseRepository>();
         
@@ -46,7 +46,7 @@ public static class Extensions
             {
                 var services = scope.ServiceProvider;
 
-                var context = services.GetRequiredService<PostgresContext>();    
+                var context = services.GetRequiredService<PostgresExerciseDomainContext>();    
                 context.Database.Migrate();
             }
         }
@@ -74,6 +74,4 @@ public static class Extensions
 
         return app;
     }
-    
-    
 }

@@ -1,18 +1,17 @@
 namespace PersonFit.Domain.Exercise.Infrastructure.Postgres;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Documents;
 using PersonFit.Infrastructure.Postgres.Options;
 using Microsoft.Extensions.Logging;
 
-internal class PostgresContext : DbContext
+internal class PostgresExerciseDomainContext : DbContext
 {
     private readonly ILoggerFactory _loggerFactory;
     public virtual DbSet<ExerciseDocument> Exercises { get; private set; }
     private readonly DbSetting _setting;
     
-    public PostgresContext(IOptions<DbSetting> options, ILoggerFactory loggerFactory)
+    public PostgresExerciseDomainContext(IOptions<DbSetting> options, ILoggerFactory loggerFactory)
     {
         _loggerFactory = loggerFactory;
         if (options.Value is not null)

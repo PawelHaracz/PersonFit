@@ -5,18 +5,19 @@ using PersonFit.Core;
 using Exceptions;
 using Documents;
 
+[Obsolete]
 internal class ExercisePostgresRepository : IPostgresRepository<ExerciseDocument, Guid>
 {
-    private readonly PostgresContext _context;
+    private readonly PostgresExerciseDomainContext _exerciseDomainContext;
 
-    public ExercisePostgresRepository(PostgresContext context)
+    public ExercisePostgresRepository(PostgresExerciseDomainContext exerciseDomainContext)
     {
-        _context = context;
+        _exerciseDomainContext = exerciseDomainContext;
     }
 
     public async Task<ExerciseDocument> GetAsync(Guid id, CancellationToken token = default)
     {
-        var exercise = await _context.Exercises.SingleOrDefaultAsync(document => document.Id == id, token);
+        var exercise = await _exerciseDomainContext.Exercises.SingleOrDefaultAsync(document => document.Id == id, token);
         if (exercise is null)
         {
             throw new ExerciseNotExistDatabaseException(id);
@@ -28,33 +29,33 @@ internal class ExercisePostgresRepository : IPostgresRepository<ExerciseDocument
     public async Task<ExerciseDocument> GetAsync(Expression<Func<ExerciseDocument, bool>> predicate,
         CancellationToken token = default)
     {
-        var exercise = await _context.Exercises.SingleOrDefaultAsync(predicate, token);
+        var exercise = await _exerciseDomainContext.Exercises.SingleOrDefaultAsync(predicate, token);
 
         return exercise;
     }
 
     public async Task AddAsync(ExerciseDocument entity, CancellationToken token = default)
     {
-        await _context.Exercises.AddAsync(entity, token);
-        await _context.SaveChangesAsync(token);
+        await _exerciseDomainContext.Exercises.AddAsync(entity, token);
+        await _exerciseDomainContext.SaveChangesAsync(token);
     }
 
     public async Task UpdateAsync(ExerciseDocument entity, CancellationToken token = default)
     {
-        await _context.Exercises.AddAsync(entity, token);
-        await _context.SaveChangesAsync(token);
+        await _exerciseDomainContext.Exercises.AddAsync(entity, token);
+        await _exerciseDomainContext.SaveChangesAsync(token);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken token = default)
     {
-        var exercise = await _context.Exercises.SingleOrDefaultAsync(document => document.Id == id, token);
+        var exercise = await _exerciseDomainContext.Exercises.SingleOrDefaultAsync(document => document.Id == id, token);
         if (exercise is null)
         {
             return;
         }
 
-        _context.Exercises.Remove(exercise);
-        await _context.SaveChangesAsync(token);
+        _exerciseDomainContext.Exercises.Remove(exercise);
+        await _exerciseDomainContext.SaveChangesAsync(token);
     }
 
     public async Task<bool> ExistsAsync(Expression<Func<ExerciseDocument, bool>> predicate,
@@ -72,16 +73,16 @@ internal class ExercisePostgresRepository : IPostgresRepository<ExerciseDocument
     }
 
     public IQueryable<ExerciseDocument> Get() 
-        => _context.Exercises.AsQueryable();
+        => _exerciseDomainContext.Exercises.AsQueryable();
 
     public IQueryable<ExerciseDocument> GetQueryable(Expression<Func<ExerciseDocument, bool>> predicate)
     {
         if (predicate is null)
         {
-            return Get();
+            return Get().AsNoTracking();
         }
         
-        return  _context.Exercises.Where(predicate).AsQueryable();
+        return  _exerciseDomainContext.Exercises.Where(predicate).AsQueryable().AsNoTracking();
     }
 }
     

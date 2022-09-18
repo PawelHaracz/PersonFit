@@ -13,7 +13,7 @@ using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
 
 namespace PersonFit.Domain.Exercise.Migrations
 {
-    [DbContext(typeof(PostgresContext))]
+    [DbContext(typeof(PostgresExerciseDomainContext))]
     [Migration("20220524171427_InitMigration")]
     partial class InitMigration
     {

@@ -12,7 +12,7 @@ using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
 
 namespace PersonFit.Domain.Exercise.Migrations
 {
-    [DbContext(typeof(PostgresContext))]
+    [DbContext(typeof(PostgresExerciseDomainContext))]
     partial class PostgresContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
