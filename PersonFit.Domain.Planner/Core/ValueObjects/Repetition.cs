@@ -1,6 +1,6 @@
 namespace PersonFit.Domain.Planner.Core.ValueObjects;
 using Enums;
-internal struct Repetition: IEquatable<Repetition>
+internal struct Repetition: IEquatable<Repetition>, IComparable<Repetition>, IComparable
 {
     public Repetition(int order, int count, MeasurementUnit unit, string note)
     {
@@ -31,9 +31,31 @@ internal struct Repetition: IEquatable<Repetition>
     {
         return HashCode.Combine(Order, Count, (int)Unit, Note);
     }
-
+    
     public void ChangeOrder(int newOrder)
     {
         Order = newOrder;
+    }
+
+    public int CompareTo(object obj)
+    {
+        if (obj is Repetition repetition)
+        {
+            return CompareTo(repetition);
+        }
+
+        return -1;
+    }
+
+    
+    public int CompareTo(Repetition other)
+    {
+        var orderComparison = Order.CompareTo(other.Order);
+        if (orderComparison != 0) return orderComparison;
+        var countComparison = Count.CompareTo(other.Count);
+        if (countComparison != 0) return countComparison;
+        var noteComparison = string.Compare(Note, other.Note, StringComparison.Ordinal);
+        if (noteComparison != 0) return noteComparison;
+        return Unit.CompareTo(other.Unit);
     }
 }

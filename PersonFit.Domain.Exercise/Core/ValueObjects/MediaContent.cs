@@ -21,4 +21,11 @@ internal readonly struct MediaContent: IEquatable<MediaContent>
     {
         return HashCode.Combine(Url, (int)Type);
     }
+
+    public int CompareTo(MediaContent other)
+    {
+        var urlComparison = string.Compare(Url, other.Url, StringComparison.Ordinal);
+        if (urlComparison != 0) return urlComparison;
+        return Type.CompareTo(other.Type);
+    }
 }

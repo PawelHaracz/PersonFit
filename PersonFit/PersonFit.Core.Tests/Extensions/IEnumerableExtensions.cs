@@ -1,7 +1,6 @@
+namespace PersonFit.Core.Tests.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-
-namespace PersonFit.Domain.Exercise.Tests.Extensions;
 
 public static class IEnumerableExtensions
 {
@@ -12,6 +11,6 @@ public static class IEnumerableExtensions
             return true;
         }
 
-        return first.OrderBy(i => i).SequenceEqual(second.OrderBy(i => i));
+        return first.SequenceEqual(second);
     }
 }

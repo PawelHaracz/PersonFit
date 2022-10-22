@@ -1,4 +1,5 @@
 namespace PersonFit.Domain.Exercise.Tests.Extensions;
+using PersonFit.Core.Tests.Extensions;
 
 internal static class AggregateRootExtensions
 {

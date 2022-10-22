@@ -9,12 +9,12 @@ using NSubstitute;
 using Core.Repositories;
 using Xunit;
 using System.Collections.Generic;
-using Extensions;
 using Application.Exceptions;
 using Shouldly;
 using PersonFit.Core.Aggregations;
 using PersonFit.Core.Events;
-
+using PersonFit.Core.Tests.Extensions;
+using Extensions;
 public class AddExerciseCommandTests
 {
     
