@@ -18,9 +18,4 @@
         <InternalsVisibleTo Include="PersonFit.Infrastructure" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Api" />
-      <Folder Include="Migrations" />
-    </ItemGroup>
-
 </Project>
