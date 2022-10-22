@@ -1,4 +1,5 @@
-namespace PersonFit.Domain.Planner.Application.Commands.CommandHandlers;
+
+namespace PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
 using Core.Repositories;
@@ -21,7 +22,7 @@ internal class AddExerciseRepetitionsCommandHandler : ICommandHandler<AddExercis
         foreach (var dto in command.Repetitions)
         {
             planner.AddRepetition(dto.Count, dto.Unit, dto.Note);
-        }        
+        }   
         
         await _domainRepository.Update(planner, token);
         await _eventProcessor.ProcessAsync(planner.Events, token);

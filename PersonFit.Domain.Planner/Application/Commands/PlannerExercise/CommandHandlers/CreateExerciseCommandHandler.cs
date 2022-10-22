@@ -1,8 +1,7 @@
-namespace PersonFit.Domain.Planner.Application.Commands.CommandHandlers;
+namespace PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
 using Exceptions;
-using Core.Entities;
 using Core.Repositories;
 
 internal class CreateExerciseCommandHandler : ICommandHandler<CreateExerciseCommand>
@@ -23,7 +22,7 @@ internal class CreateExerciseCommandHandler : ICommandHandler<CreateExerciseComm
         {
             throw new ExerciseAlreadyCreatedException(command.OwnerId, command.ExerciseId,hasExist);
         }
-        var planner = PlannerExercise.Create(command.Id ,command.OwnerId, command.ExerciseId);
+        var planner = Core.Entities.PlannerExercise.Create(command.Id ,command.OwnerId, command.ExerciseId);
         foreach (var exerciseRepetitionDto in command.Repetition)
         {
             planner.AddRepetition(exerciseRepetitionDto.Count, exerciseRepetitionDto.Unit, exerciseRepetitionDto.Note);

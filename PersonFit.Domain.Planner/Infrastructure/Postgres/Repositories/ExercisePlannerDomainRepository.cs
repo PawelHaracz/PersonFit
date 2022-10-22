@@ -8,7 +8,12 @@ using Documents;
 internal class ExercisePlannerDomainRepository : IExerciseRepository
 {
     private readonly IPostgresRepository<ExercisePlannerDocument, Guid> _postgresRepository;
-    
+
+    public ExercisePlannerDomainRepository(IPostgresRepository<ExercisePlannerDocument, Guid> postgresRepository)
+    {
+        _postgresRepository = postgresRepository;
+    }
+
     public async Task<Guid> Exists(Guid ownerId, Guid exerciseId, CancellationToken token)
     {
         var item = await _postgresRepository.GetQueryable(document =>

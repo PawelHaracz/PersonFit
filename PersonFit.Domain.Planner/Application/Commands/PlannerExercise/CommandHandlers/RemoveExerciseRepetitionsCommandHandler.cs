@@ -1,8 +1,7 @@
-namespace PersonFit.Domain.Planner.Application.Commands.CommandHandlers;
+namespace PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
 using Core.Repositories;
-
 internal class RemoveExerciseRepetitionsCommandHandler : ICommandHandler<RemoveExerciseRepetitionsCommand>
 {
     private readonly IExerciseRepository _domainRepository;

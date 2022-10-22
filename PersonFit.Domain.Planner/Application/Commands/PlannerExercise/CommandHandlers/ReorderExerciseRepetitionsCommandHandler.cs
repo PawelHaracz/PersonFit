@@ -1,8 +1,8 @@
-namespace PersonFit.Domain.Planner.Application.Commands.CommandHandlers;
+namespace PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
-using Core.Repositories;
 using Exceptions;
+using Core.Repositories;
 
 internal class ReorderExerciseRepetitionsCommandHandler : ICommandHandler<ReorderExerciseRepetitionsCommand>
 {

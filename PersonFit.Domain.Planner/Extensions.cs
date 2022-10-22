@@ -1,3 +1,6 @@
+using PersonFit.Domain.Planner.Application.Commands.Planner;
+using PersonFit.Domain.Planner.Application.Commands.Planner.CommandHandlers;
+
 namespace PersonFit.Domain.Planner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -7,14 +10,13 @@ using Microsoft.Extensions.Hosting;
 using PersonFit.Core;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Queries;
-using Application.Commands;
-using Application.Commands.CommandHandlers;
 using Core.Repositories;
 using Infrastructure.Postgres;
 using Infrastructure.Postgres.Documents;
 using Infrastructure.Postgres.Repositories;
 using PersonFit.Infrastructure.Postgres;
-
+using Application.Commands.PlannerExercise;
+using Application.Commands.PlannerExercise.CommandHandlers;
 public static class Extensions
 {
         public static WebApplicationBuilder RegisterPlannerDomain(this WebApplicationBuilder builder)
@@ -26,6 +28,8 @@ public static class Extensions
         builder.Services.AddScoped<ICommandHandler<RemoveExerciseRepetitionsCommand>,RemoveExerciseRepetitionsCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<ReorderExerciseRepetitionsCommand>,ReorderExerciseRepetitionsCommandHandler>();
 
+        builder.Services.AddScoped<ICommandHandler<CreatePlannerCommand>, CreatePlannerCommandHandler>();
+
         // builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, IEnumerable<ExerciseDto>>, GetExercisesQueryHandler>();
         // builder.Services.AddScoped<IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>, GetExerciseQueryHandler>();
         
@@ -34,6 +38,7 @@ public static class Extensions
         builder.Services.AddScoped<IPostgresRepository<PlannerDocument, Guid>, PostgresDomainRepository<PlannerDocument>>(  
             provider => new PostgresDomainRepository<PlannerDocument>(provider.GetRequiredService<PostgresPlannerDomainContext>()));
         builder.Services.AddScoped<IExerciseRepository, ExercisePlannerDomainRepository>();
+        builder.Services.AddScoped<IPlannerRepository, PlannerDomainRepository>();
         //builder.Services.AddScoped<IReadExerciseRepository, ReadExerciseRepository>();
         
         return builder;

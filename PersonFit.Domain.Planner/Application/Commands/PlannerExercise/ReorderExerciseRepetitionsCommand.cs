@@ -1,4 +1,4 @@
-namespace PersonFit.Domain.Planner.Application.Commands;
+namespace PersonFit.Domain.Planner.Application.Commands.PlannerExercise;
 using PersonFit.Core.Commands;
 using Dtos;
 

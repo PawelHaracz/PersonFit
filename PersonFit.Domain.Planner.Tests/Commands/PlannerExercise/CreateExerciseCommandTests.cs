@@ -9,8 +9,6 @@ using PersonFit.Core.Aggregations;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
 using PersonFit.Core.Tests.Extensions;
-using PersonFit.Domain.Planner.Application.Commands;
-using PersonFit.Domain.Planner.Application.Commands.CommandHandlers;
 using Application.Dtos;
 using Application.Exceptions;
 using Core.Enums;
@@ -18,7 +16,8 @@ using Core.Repositories;
 using Extensions;
 using Xunit;
 using Shouldly;
-
+using PersonFit.Domain.Planner.Application.Commands.PlannerExercise;
+using PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
 public class CreateExerciseCommandTests
 {
     [Fact]
@@ -49,7 +48,7 @@ public class CreateExerciseCommandTests
 
         await _repository.Received(1).Create(Arg.Is<Core.Entities.PlannerExercise>(e => 
             e.Compare( exercise)), cancellationToken);
-        await _eventProcessor.Received().ProcessAsync(Arg.Is<IEnumerable<IDomainEvent>>(
+        await _eventProcessor.Received(1).ProcessAsync(Arg.Is<IEnumerable<IDomainEvent>>(
                 events => events.CompareArrays(exercise.Events)), 
             cancellationToken);
     }
