@@ -1,7 +1,7 @@
 namespace PersonFit.Domain.Planner.Core.Enums;
 
 [Flags]
-internal enum TimeOfDay
+public enum TimeOfDay
 {
     Morning = 1,
     Afternoon = 2,

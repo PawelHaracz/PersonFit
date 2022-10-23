@@ -1,6 +1,6 @@
 namespace PersonFit.Domain.Planner.Core.Enums;
 
-internal enum MeasurementUnit
+public enum MeasurementUnit
 {
     None = 0,
     Mass = 1,
