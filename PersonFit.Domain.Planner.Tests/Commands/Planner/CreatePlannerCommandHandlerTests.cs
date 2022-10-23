@@ -12,6 +12,7 @@ using PersonFit.Domain.Planner.Application.Commands.Planner;
 using PersonFit.Domain.Planner.Application.Commands.Planner.CommandHandlers;
 using Application.Exceptions;
 using Core.Repositories;
+using Core.Events;
 using Extensions;
 using Shouldly;
 using Xunit;
@@ -31,6 +32,8 @@ public class CreatePlannerCommandHandlerTests
         await _eventProcessor.Received(1).ProcessAsync(Arg.Is<IEnumerable<IDomainEvent>>(
                 events => events.CompareArrays(planner.Events)), 
             cancellationToken);
+        
+        Assert.Collection(planner.Events, @event => @event.ShouldBeAssignableTo<CreatedNewPlannerEvent>());
     }
     
     [Fact]

@@ -28,16 +28,16 @@ public class AddExercisesTests
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay);
                 dp.PlannerExercise.ShouldBe(exercises[0]);
             },
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay);
                 dp.PlannerExercise.ShouldBe(exercises[1]);
@@ -63,8 +63,8 @@ public class AddExercisesTests
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay);
                 dp.PlannerExercise.ShouldBe(exercises[0]);
@@ -90,16 +90,16 @@ public class AddExercisesTests
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay);
                 dp.PlannerExercise.ShouldBe(exercise1);
             },
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay);
                 dp.PlannerExercise.ShouldBe(exercise2);
@@ -129,16 +129,16 @@ public class AddExercisesTests
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay1);
                 dp.PlannerExercise.ShouldBe(exercise1);
             },
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay2);
                 dp.PlannerExercise.ShouldBe(exercise2);
@@ -163,8 +163,8 @@ public class AddExercisesTests
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<AddedPlannerExercise>();
-                var dp = @event as AddedPlannerExercise;
+                @event.ShouldBeOfType<AddedPlannerExerciseEvent>();
+                var dp = @event as AddedPlannerExerciseEvent;
                 dp.DayOfWeek.ShouldBe(dayOfWeek);
                 dp.TimeOfDay.ShouldBe(timeOfDay);
                 dp.PlannerExercise.ShouldBe(exercise1);
@@ -186,7 +186,7 @@ public class AddExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event => @event.ShouldBeOfType<AddedPlannerExercise>());
+            @event => @event.ShouldBeOfType<AddedPlannerExerciseEvent>());
     }
 
     [Fact]

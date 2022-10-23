@@ -1,13 +1,11 @@
+namespace PersonFit.Domain.Planner.Tests.Entities.Planner;
 using System;
 using System.Linq;
-using PersonFit.Domain.Planner.Core.Enums;
-using PersonFit.Domain.Planner.Core.Events;
-using PersonFit.Domain.Planner.Core.ValueObjects;
+using Core.Enums;
+using Core.Events;
+using Core.ValueObjects;
 using Shouldly;
 using Xunit;
-
-namespace PersonFit.Domain.Planner.Tests.Entities.Planner;
-
 public class RemoveDailyPlannerTests
 {
     [Fact]
@@ -15,8 +13,9 @@ public class RemoveDailyPlannerTests
     {
 
         var planner = Arrange();
-        planner.RemoveDailyPlanner(DayOfWeek.Monday, TimeOfDay.Afternoon);
+        var status = planner.RemoveDailyPlanner(DayOfWeek.Monday, TimeOfDay.Afternoon);
 
+        Assert.True(status);
         planner.DailyPlanners.Count().ShouldBe(2);
         
         Assert.Collection(planner.DailyPlanners,
@@ -32,7 +31,7 @@ public class RemoveDailyPlannerTests
             });
         
         Assert.Collection(planner.Events,
-            @event => @event.ShouldBeOfType<RemovedDailyPlanner>());
+            @event => @event.ShouldBeOfType<RemovedDailyPlannerEvent>());
     }
     
     [Fact]
@@ -40,8 +39,9 @@ public class RemoveDailyPlannerTests
     {
 
         var planner = Arrange();
-        planner.RemoveDailyPlanner(DayOfWeek.Wednesday, TimeOfDay.Afternoon);
-
+        var status = planner.RemoveDailyPlanner(DayOfWeek.Wednesday, TimeOfDay.Afternoon);
+        
+        Assert.False(status);
         planner.DailyPlanners.Count().ShouldBe(3);
         
         planner.Events.ShouldBeEmpty();

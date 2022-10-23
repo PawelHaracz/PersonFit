@@ -26,13 +26,13 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise2);
@@ -57,21 +57,21 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise2);
             },
             @event =>
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise1);
@@ -102,14 +102,14 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek2);
                 r.TimeOfDay.ShouldBe(timeOfDay2);
                 r.PlannerExercise.ShouldBe(exercise2);
@@ -132,7 +132,7 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>());   
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>());   
     }
 
     [Fact]
@@ -154,13 +154,13 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise2);
@@ -182,14 +182,21 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
             @event =>
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise1);
+            },
+            @event =>
+            {
+                @event.ShouldBeOfType<RemovedDailyPlannerEvent>();
+                var r = @event as RemovedDailyPlannerEvent;
+                r.DayOfWeek.ShouldBe(dayOfWeek);
+                r.TimeOfDay.ShouldBe(timeOfDay);
             });  
     }
 
@@ -211,8 +218,8 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>());
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>());
     }
 
     [Fact]
@@ -232,37 +239,37 @@ public class RemoveExercisesTests
         
         Assert.Collection(planner.Events, 
             @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
-            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExerciseEvent>(),
             @event => 
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise2);
             },
             @event => 
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise1);
             },
             @event => 
             {
-                @event.ShouldBeOfType<RemovedPlannerExercise>();
-                var r = @event as RemovedPlannerExercise;
+                @event.ShouldBeOfType<RemovedPlannerExerciseEvent>();
+                var r = @event as RemovedPlannerExerciseEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
                 r.PlannerExercise.ShouldBe(exercise3);
             },
             @event => 
             {
-                @event.ShouldBeOfType<RemovedDailyPlanner>();
-                var r = @event as RemovedDailyPlanner;
+                @event.ShouldBeOfType<RemovedDailyPlannerEvent>();
+                var r = @event as RemovedDailyPlannerEvent;
                 r.DayOfWeek.ShouldBe(dayOfWeek);
                 r.TimeOfDay.ShouldBe(timeOfDay);
             });

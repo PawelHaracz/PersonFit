@@ -21,23 +21,32 @@ internal class ModifyDailyPlannerCommandHandler : ICommandHandler<ModifyDailyPla
 
     public async Task HandleAsync(ModifyDailyPlannerCommand command, CancellationToken token = default)
     {
-        var planner = await _domainRepository.GetById(command.PlannerId, command.OwnerId, token);
+        var planner = await _domainRepository.GetById(command.OwnerId, command.PlannerId, token);
         var hasPerform = await _policyEvaluator.Evaluate(planner, token);
 
         if (hasPerform is false)
         {
             throw new CannotChangePlannerException(planner.Id, nameof(ModifyDailyPlannerCommandHandler));
         }
-
+        
         var grouped = command.Exercises
             .GroupBy(e => e.Modifier).ToArray();
         
-        var toAdd = grouped.SingleOrDefault(e => e.Key == ActionModifier.Add)?.Select(e => e.ExerciseId).ToArray();
-        var toRemove = grouped.SingleOrDefault(e => e.Key == ActionModifier.Remove)?.Select(e => e.ExerciseId).ToArray();
+        var toAdd = grouped.SingleOrDefault(e => e.Key == ActionModifier.Add)?.Select(e => e.ExerciseId).ToArray() ?? Array.Empty<Guid>();
+        var toRemove = grouped.SingleOrDefault(e => e.Key == ActionModifier.Remove)?.Select(e => e.ExerciseId).ToArray() ?? Array.Empty<Guid>();
+        
+        if (toAdd.Any())
+        {
+            planner.AddExercises(command.DayOfWeek, command.TimeOfDay, toAdd.Where(r => !toRemove.Contains(r)));
+        }
 
-        planner.RemoveExercises(command.DayOfWeek, command.TimeOfDay, toAdd);
-        planner.AddExercises(command.DayOfWeek, command.TimeOfDay, toRemove);
-
+        
+        if (toRemove.Any())
+        {
+            planner.RemoveExercises(command.DayOfWeek, command.TimeOfDay, toRemove.Where(r => !toAdd.Contains(r)));
+        }
+        
+   
         await _domainRepository.Update(planner, token);
         await _eventProcessor.ProcessAsync(planner.Events, token);
     }

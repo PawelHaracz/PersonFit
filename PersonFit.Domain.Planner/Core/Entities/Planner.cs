@@ -72,7 +72,7 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
             }
 
             newPlanners.Add(plannerExercise);
-            AddEvent(new AddedPlannerExercise(dayOfWeek, timeOfDay, plannerExercise));
+            AddEvent(new AddedPlannerExerciseEvent(dayOfWeek, timeOfDay, plannerExercise));
         }
 
         item.UpdateExercisePlanners(newPlanners);
@@ -103,7 +103,7 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
             }
 
             newPlanners.Remove(plannerExercise);
-            AddEvent(new RemovedPlannerExercise(dayOfWeek, timeOfDay, plannerExercise));
+            AddEvent(new RemovedPlannerExerciseEvent(dayOfWeek, timeOfDay, plannerExercise));
         }
         item.UpdateExercisePlanners(newPlanners);
         if (newPlanners.Any())
@@ -112,19 +112,20 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
         }
         else
         {
-            AddEvent(new RemovedDailyPlanner(dayOfWeek, timeOfDay));
+            AddEvent(new RemovedDailyPlannerEvent(dayOfWeek, timeOfDay));
         }
     }
     
-    public void RemoveDailyPlanner(DayOfWeek dayOfWeek, TimeOfDay timeOfDay)
+    public bool RemoveDailyPlanner(DayOfWeek dayOfWeek, TimeOfDay timeOfDay)
     {
         var item = _dailyPlanners.SingleOrDefault(p => p.DayOfWeek == dayOfWeek && p.TimeOfDay == timeOfDay, DailyPlanner.Default);
         if (item.Equals(DailyPlanner.Default))
         {
-            return;
+            return false;
         }
         _dailyPlanners.Remove(item);
-        AddEvent(new RemovedDailyPlanner(dayOfWeek, timeOfDay));
+        AddEvent(new RemovedDailyPlannerEvent(dayOfWeek, timeOfDay));
+        return true;
     }
 
     private static PlannerStatus GetStatusBasedOnTimeRange(Guid userId, DateTime startTime, DateTime endTime)

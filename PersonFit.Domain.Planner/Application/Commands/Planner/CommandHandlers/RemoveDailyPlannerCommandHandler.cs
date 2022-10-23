@@ -19,7 +19,7 @@ internal class RemoveDailyPlannerCommandHandler: ICommandHandler<RemoveDailyPlan
 
     public async Task HandleAsync(RemoveDailyPlannerCommand command, CancellationToken token = default)
     {
-        var planner = await _domainRepository.GetById(command.PlannerId, command.OwnerId, token);
+        var planner = await _domainRepository.GetById(command.OwnerId, command.PlannerId, token);
         var hasPerform = await _policyEvaluator.Evaluate(planner, token);
 
         if (hasPerform is false)
@@ -27,8 +27,13 @@ internal class RemoveDailyPlannerCommandHandler: ICommandHandler<RemoveDailyPlan
             throw new CannotChangePlannerException(planner.Id, nameof(RemoveDailyPlannerCommandHandler));
         }
 
-        planner.RemoveDailyPlanner(command.DayOfWeek, command.TimeOfDay);
+        var status  = planner.RemoveDailyPlanner(command.DayOfWeek, command.TimeOfDay);
 
+        if (status is false)
+        {
+            return;
+        }
+        
         await _domainRepository.Update(planner, token);
         await _eventProcessor.ProcessAsync(planner.Events, token);
     }

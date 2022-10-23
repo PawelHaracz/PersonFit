@@ -19,7 +19,7 @@ internal class AddDailyPlannerCommandHandler : ICommandHandler<AddDailyPlannerCo
 
     public async Task HandleAsync(AddDailyPlannerCommand command, CancellationToken token = default)
     {
-        var planner = await _domainRepository.GetById(command.PlannerId, command.OwnerId, token);
+        var planner = await _domainRepository.GetById(command.OwnerId, command.PlannerId, token);
         var hasPerform = await _policyEvaluator.Evaluate(planner, token);
 
         if (hasPerform is false)
