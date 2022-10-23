@@ -4,6 +4,7 @@ using PersonFit.Domain.Planner.Core.Repositories;
 using Documents;
 using Microsoft.EntityFrameworkCore;
 using Core.Enums;
+using Exceptions;
 
 internal class PlannerDomainRepository : IPlannerRepository
 {
@@ -33,5 +34,27 @@ internal class PlannerDomainRepository : IPlannerRepository
         var dao = planner.AsDocument();
 
         return _postgresRepository.AddAsync(dao, token);
+    }
+
+    public async Task<Core.Entities.Planner> GetById(Guid ownerId, Guid id, CancellationToken token = default)
+    {
+        var planner =
+            await _postgresRepository.GetQueryable(document => 
+                    document.Id == id && 
+                    document.OwnerId == ownerId)
+                .SingleOrDefaultAsync(token);
+        
+        if (planner is null)
+        {
+            throw new PlannerDoesNotExists(ownerId, id);
+        }
+
+        return planner.AsEntity();
+    }
+
+    public Task Update(Core.Entities.Planner planner, CancellationToken token = default)
+    {
+        var dao = planner.AsDocument();
+        return _postgresRepository.UpdateAsync(dao, token);
     }
 }

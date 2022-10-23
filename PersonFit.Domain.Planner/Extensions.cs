@@ -1,5 +1,4 @@
-using PersonFit.Domain.Planner.Application.Commands.Planner;
-using PersonFit.Domain.Planner.Application.Commands.Planner.CommandHandlers;
+using PersonFit.Domain.Planner.Application.Policies;
 
 namespace PersonFit.Domain.Planner;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +16,8 @@ using Infrastructure.Postgres.Repositories;
 using PersonFit.Infrastructure.Postgres;
 using Application.Commands.PlannerExercise;
 using Application.Commands.PlannerExercise.CommandHandlers;
+using PersonFit.Domain.Planner.Application.Commands.Planner;
+using PersonFit.Domain.Planner.Application.Commands.Planner.CommandHandlers;
 public static class Extensions
 {
         public static WebApplicationBuilder RegisterPlannerDomain(this WebApplicationBuilder builder)
@@ -29,9 +30,14 @@ public static class Extensions
         builder.Services.AddScoped<ICommandHandler<ReorderExerciseRepetitionsCommand>,ReorderExerciseRepetitionsCommandHandler>();
 
         builder.Services.AddScoped<ICommandHandler<CreatePlannerCommand>, CreatePlannerCommandHandler>();
+        builder.Services.AddScoped<ICommandHandler<AddDailyPlannerCommand>, AddDailyPlannerCommandHandler>();
+        builder.Services.AddScoped<ICommandHandler<RemoveDailyPlannerCommand>, RemoveDailyPlannerCommandHandler>();
+        builder.Services.AddScoped<ICommandHandler<ModifyDailyPlannerCommand>, ModifyDailyPlannerCommandHandler>();
 
         // builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, IEnumerable<ExerciseDto>>, GetExercisesQueryHandler>();
         // builder.Services.AddScoped<IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>, GetExerciseQueryHandler>();
+
+        builder.Services.AddScoped<IPolicyEvaluator<Core.Entities.Planner>, PlannerPolicyEvaluator>();
         
         builder.Services.AddScoped<IPostgresRepository<ExercisePlannerDocument, Guid>>(
             provider => new PostgresDomainRepository<ExercisePlannerDocument>(provider.GetRequiredService<PostgresPlannerDomainContext>()));

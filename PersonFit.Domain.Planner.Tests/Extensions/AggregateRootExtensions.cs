@@ -11,4 +11,14 @@ internal static class AggregateRootExtensions
                first.ExerciseId == second.ExerciseId &&
                first.Repetitions.CompareArrays(second.Repetitions);
     }
+    
+    public static bool Compare(this Core.Entities.Planner first, Core.Entities.Planner second)
+    {
+        return first.Id == second.Id &&
+               first.OwnerId == second.OwnerId &&
+               first.StartTime == second.StartTime &&
+               first.EndTime == second.EndTime &&
+               first.Status == second.Status &&
+               first.DailyPlanners.CompareArrays(second.DailyPlanners);
+    }
 }

@@ -110,6 +110,21 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
         {
             _dailyPlanners.Add(item);
         }
+        else
+        {
+            AddEvent(new RemovedDailyPlanner(dayOfWeek, timeOfDay));
+        }
+    }
+    
+    public void RemoveDailyPlanner(DayOfWeek dayOfWeek, TimeOfDay timeOfDay)
+    {
+        var item = _dailyPlanners.SingleOrDefault(p => p.DayOfWeek == dayOfWeek && p.TimeOfDay == timeOfDay, DailyPlanner.Default);
+        if (item.Equals(DailyPlanner.Default))
+        {
+            return;
+        }
+        _dailyPlanners.Remove(item);
+        AddEvent(new RemovedDailyPlanner(dayOfWeek, timeOfDay));
     }
 
     private static PlannerStatus GetStatusBasedOnTimeRange(Guid userId, DateTime startTime, DateTime endTime)
@@ -130,4 +145,6 @@ internal sealed class Planner: AggregateRoot, IAggregateRoot
 
         throw new PlannerCreatingException(userId, startTime, endTime);
     }
+
+
 }

@@ -214,6 +214,60 @@ public class RemoveExercisesTests
             @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
             @event =>  @event.ShouldBeOfType<AddedPlannerExercise>());
     }
+
+    [Fact]
+    public void remove_all_exercises_from_planner_should_remove_planer()
+    {
+        Guid exercise1 = new Guid("24C4C695-5DA4-4F38-8BED-2207FA438370");
+        Guid exercise2 = new Guid("E4FC0C08-E226-4737-A3C7-59E4EC529718");
+        Guid exercise3 = new Guid("F31CDE79-C94D-427B-A5A4-FCA26B0841B8");
+        var dayOfWeek = DayOfWeek.Friday;
+        var timeOfDay = TimeOfDay.Morning;
+        
+        var planner = Arrange(dayOfWeek, timeOfDay, exercise1, exercise2, exercise3);
+        
+        planner.RemoveExercises(dayOfWeek, timeOfDay, new []{ exercise2, exercise1,exercise3  });
+        
+        planner.DailyPlanners.ShouldBeEmpty();
+        
+        Assert.Collection(planner.Events, 
+            @event => @event.ShouldBeOfType<CreatedNewPlannerEvent>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event =>  @event.ShouldBeOfType<AddedPlannerExercise>(),
+            @event => 
+            {
+                @event.ShouldBeOfType<RemovedPlannerExercise>();
+                var r = @event as RemovedPlannerExercise;
+                r.DayOfWeek.ShouldBe(dayOfWeek);
+                r.TimeOfDay.ShouldBe(timeOfDay);
+                r.PlannerExercise.ShouldBe(exercise2);
+            },
+            @event => 
+            {
+                @event.ShouldBeOfType<RemovedPlannerExercise>();
+                var r = @event as RemovedPlannerExercise;
+                r.DayOfWeek.ShouldBe(dayOfWeek);
+                r.TimeOfDay.ShouldBe(timeOfDay);
+                r.PlannerExercise.ShouldBe(exercise1);
+            },
+            @event => 
+            {
+                @event.ShouldBeOfType<RemovedPlannerExercise>();
+                var r = @event as RemovedPlannerExercise;
+                r.DayOfWeek.ShouldBe(dayOfWeek);
+                r.TimeOfDay.ShouldBe(timeOfDay);
+                r.PlannerExercise.ShouldBe(exercise3);
+            },
+            @event => 
+            {
+                @event.ShouldBeOfType<RemovedDailyPlanner>();
+                var r = @event as RemovedDailyPlanner;
+                r.DayOfWeek.ShouldBe(dayOfWeek);
+                r.TimeOfDay.ShouldBe(timeOfDay);
+            });
+    }
+    
     
     private Core.Entities.Planner Arrange(DayOfWeek dayOfWeek, TimeOfDay timeOfDay,  params Guid[] exerciseIds)
     {

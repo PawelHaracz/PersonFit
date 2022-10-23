@@ -23,9 +23,5 @@
       <ProjectReference Include="..\PersonFit.Domain.Planner\PersonFit.Domain.Planner.csproj" />
       <ProjectReference Include="..\PersonFit\PersonFit.Core.Tests\PersonFit.Core.Tests.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Commands\Planner" />
-    </ItemGroup>
 
 </Project>

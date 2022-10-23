@@ -1,10 +1,8 @@
-using PersonFit.Domain.Planner.Application.Exceptions;
-
 namespace PersonFit.Domain.Planner.Application.Commands.Planner.CommandHandlers;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
 using Core.Repositories;
-
+using Exceptions;
 internal class CreatePlannerCommandHandler : ICommandHandler<CreatePlannerCommand>
 {
     private readonly IPlannerRepository _domainRepository;
@@ -33,6 +31,6 @@ internal class CreatePlannerCommandHandler : ICommandHandler<CreatePlannerComman
         var planner = Core.Entities.Planner.Create(command.Id, command.OwnerId, command.StartTime.ToDateTime(TimeOnly.MinValue), command.EndTime.ToDateTime(TimeOnly.MinValue));
 
         await _domainRepository.Create(planner, token);
-       await _eventProcessor.ProcessAsync(planner.Events, token);
+        await _eventProcessor.ProcessAsync(planner.Events, token);
     }
 }

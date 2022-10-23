@@ -1,6 +1,5 @@
-using PersonFit.Core.Exceptions;
-
 namespace PersonFit.Domain.Planner.Application.Exceptions;
+using PersonFit.Core.Exceptions;
 
 internal class PlannerAlreadyCreatedException : AppException
 {
