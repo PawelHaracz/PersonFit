@@ -1,6 +1,7 @@
 namespace PersonFit.Domain.Planner.Core.Repositories;
 
-public interface IPlannerRepository
+internal interface IPlannerRepository
 {
-    
+    Task<Guid> GetActivatedPlannerId(Guid ownerId, DateTime starTime, DateTime endTime, CancellationToken token = default);
+    Task Create(Core.Entities.Planner planner, CancellationToken token = default);
 }

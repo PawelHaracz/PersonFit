@@ -11,5 +11,4 @@ internal class ExerciseAlreadyCreatedException: AppException
     public ExerciseAlreadyCreatedException(Guid ownerId, Guid exerciseId, Guid exercisePlannerId) : base(
         $"Owner {ownerId} already has exerciseId {exerciseId} in the planner {exercisePlannerId}")
         => (OwnerId, ExerciseId, ExercisePlannerId) = (ownerId, exerciseId, exercisePlannerId);
-    
 }

@@ -1,3 +1,5 @@
+using PersonFit.Domain.Planner.Application.Exceptions;
+
 namespace PersonFit.Domain.Planner.Application.Commands.Planner.CommandHandlers;
 using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
@@ -16,6 +18,21 @@ internal class CreatePlannerCommandHandler : ICommandHandler<CreatePlannerComman
 
     public async Task HandleAsync(CreatePlannerCommand command, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var plannerId =
+            await _domainRepository.GetActivatedPlannerId(
+                command.OwnerId, 
+                command.StartTime.ToDateTime(TimeOnly.MinValue), 
+                command.EndTime.ToDateTime(TimeOnly.MinValue),
+                token);
+        
+        if (plannerId != Guid.Empty)
+        {
+            throw new PlannerAlreadyCreatedException(command.OwnerId, command.StartTime, command.EndTime, plannerId);
+        }
+        
+        var planner = Core.Entities.Planner.Create(command.Id, command.OwnerId, command.StartTime.ToDateTime(TimeOnly.MinValue), command.EndTime.ToDateTime(TimeOnly.MinValue));
+
+        await _domainRepository.Create(planner, token);
+       await _eventProcessor.ProcessAsync(planner.Events, token);
     }
 }
