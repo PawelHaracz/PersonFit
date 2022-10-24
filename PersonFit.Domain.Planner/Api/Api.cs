@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace PersonFit.Domain.Planner.Api;
 using PersonFit.Domain.Planner.Api.Dtos.Commands.Planner;
 using Microsoft.AspNetCore.Builder;
@@ -25,7 +27,7 @@ internal static class  Api
             return Results.NoContent();
         });
 
-        app.MapPut("/planner", async (CreatePlannerCommandDto dto, ICommandDispatcher dispatcher,
+        app.MapPut("/planner", async ([FromBody]CreatePlannerCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
         {
@@ -36,7 +38,7 @@ internal static class  Api
             return Results.Created(new Uri($"planner/{id}", UriKind.Relative), id);
         });
         
-        app.MapPut("/planner/{id:guid}/daily", async (Guid id, AddDailyPlannerCommandDto dto, ICommandDispatcher dispatcher, HttpContext context,
+        app.MapPut("/planner/{id:guid}/daily", async (Guid id, [FromBody]AddDailyPlannerCommandDto dto, ICommandDispatcher dispatcher, HttpContext context,
             CancellationToken token) =>
         {
             var command = new AddDailyPlannerCommand(id, _ownerId, dto.DayOfWeek, dto.TimeOfDay, dto.Workouts) ;
@@ -45,7 +47,7 @@ internal static class  Api
             return Results.Accepted();
         });
 
-        app.MapDelete("/planner/{id:guid}/daily", async (Guid id, RemovedDailyPlannerCommandDto dto, ICommandDispatcher dispatcher,
+        app.MapDelete("/planner/{id:guid}/daily", async (Guid id, [FromBody]RemovedDailyPlannerCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
         {
@@ -54,7 +56,7 @@ internal static class  Api
             return Results.Accepted();
         });
         
-        app.MapPost("/planner/{id:guid}/daily", async (Guid id, ModifyDailyPlannerCommandDto dto, ICommandDispatcher dispatcher,
+        app.MapPost("/planner/{id:guid}/daily", async (Guid id, [FromBody]ModifyDailyPlannerCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
         {
@@ -79,7 +81,7 @@ internal static class  Api
             return Results.NoContent();
         });
         
-        app.MapPut("/planner/exercise", async (CreateExerciseCommandDto dto, ICommandDispatcher dispatcher,
+        app.MapPut("/planner/exercise", async ([FromBody]CreateExerciseCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
         {
@@ -90,7 +92,7 @@ internal static class  Api
             return Results.Created(new Uri($"planner/exercise/{id}", UriKind.Relative), id);
         });
         
-        app.MapPut("/planner/exercise/{id:guid}", async (Guid id, AddExerciseRepetitionsCommandDto dto, ICommandDispatcher dispatcher,
+        app.MapPut("/planner/exercise/{id:guid}", async (Guid id, [FromBody]AddExerciseRepetitionsCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
         {
@@ -100,7 +102,7 @@ internal static class  Api
             return Results.Accepted($"/planner/exercise/{id}", id);
         });
         
-        app.MapDelete("/planner/exercise/{id:guid}", async (Guid id, RemoveExerciseRepetitionsCommandDto dto, ICommandDispatcher dispatcher,
+        app.MapDelete("/planner/exercise/{id:guid}", async (Guid id, [FromBody]RemoveExerciseRepetitionsCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
         {
@@ -110,7 +112,7 @@ internal static class  Api
             return Results.Accepted($"/planner/exercise/{id}", id);
         });
         
-        app.MapPost("/planner/exercise/{id:guid}", async (Guid id, ReorderExerciseRepetitionsCommandDto dto, ICommandDispatcher dispatcher,
+        app.MapPost("/planner/exercise/{id:guid}", async (Guid id, [FromBody]ReorderExerciseRepetitionsCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
         {

@@ -21,7 +21,7 @@
     
     <ItemGroup>
       <ProjectReference Include="..\PersonFit.Domain.Planner\PersonFit.Domain.Planner.csproj" />
-      <ProjectReference Include="..\PersonFit\PersonFit.Core.Tests\PersonFit.Core.Tests.csproj" />
+      <ProjectReference Include="..\PersonFit.Core.Tests\PersonFit.Core.Tests.csproj" />
     </ItemGroup>
 
 </Project>

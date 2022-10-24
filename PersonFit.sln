@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonFit.Domain.Planner", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonFit.Domain.Planner.Tests", "PersonFit.Domain.Planner.Tests\PersonFit.Domain.Planner.Tests.csproj", "{8183DCC6-1D1A-4219-95E4-0C606C0D9279}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonFit.Core.Tests", "PersonFit\PersonFit.Core.Tests\PersonFit.Core.Tests.csproj", "{63B5FF0E-AB28-4A1F-B2DE-FE5B3CD7FAB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonFit.Core.Tests", "PersonFit.Core.Tests\PersonFit.Core.Tests.csproj", "{63B5FF0E-AB28-4A1F-B2DE-FE5B3CD7FAB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
