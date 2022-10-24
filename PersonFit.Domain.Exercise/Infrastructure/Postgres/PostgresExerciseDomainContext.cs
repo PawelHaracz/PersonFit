@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 internal class PostgresExerciseDomainContext : DbContext
 {
+    private const string Schema = "exercise";
     private readonly ILoggerFactory _loggerFactory;
     public virtual DbSet<ExerciseDocument> Exercises { get; private set; }
     private readonly DbSetting _setting;
@@ -28,5 +29,9 @@ internal class PostgresExerciseDomainContext : DbContext
         optionsBuilder.UseLoggerFactory(_loggerFactory);
         optionsBuilder.UseNpgsql(_setting.ToString());
         base.OnConfiguring(optionsBuilder);
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasDefaultSchema(Schema);
     }
 }

@@ -14,13 +14,14 @@ using PersonFit.Domain.Planner.Infrastructure.Postgres.Documents;
 namespace PersonFit.Domain.Planner.Migrations
 {
     [DbContext(typeof(PostgresPlannerDomainContext))]
-    [Migration("20221024170316_PlannerInit")]
+    [Migration("20221024172234_PlannerInit")]
     partial class PlannerInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("planner")
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -46,7 +47,7 @@ namespace PersonFit.Domain.Planner.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("PlannerExercises", "planner");
                 });
 
             modelBuilder.Entity("PersonFit.Domain.Planner.Infrastructure.Postgres.Documents.PlannerDocument", b =>
@@ -75,7 +76,7 @@ namespace PersonFit.Domain.Planner.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Planners");
+                    b.ToTable("Planners", "planner");
                 });
 #pragma warning restore 612, 618
         }

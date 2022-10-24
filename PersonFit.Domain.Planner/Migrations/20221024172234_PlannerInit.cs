@@ -11,8 +11,12 @@ namespace PersonFit.Domain.Planner.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "planner");
+
             migrationBuilder.CreateTable(
-                name: "Exercises",
+                name: "PlannerExercises",
+                schema: "planner",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -23,11 +27,12 @@ namespace PersonFit.Domain.Planner.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercises", x => x.Id);
+                    table.PrimaryKey("PK_PlannerExercises", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Planners",
+                schema: "planner",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -47,10 +52,12 @@ namespace PersonFit.Domain.Planner.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Exercises");
+                name: "PlannerExercises",
+                schema: "planner");
 
             migrationBuilder.DropTable(
-                name: "Planners");
+                name: "Planners",
+                schema: "planner");
         }
     }
 }

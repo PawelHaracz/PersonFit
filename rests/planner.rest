@@ -1,0 +1,22 @@
+@hostname = localhost
+@port = 7274
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+@exerciseId = 2eafd7a2-8522-425a-932c-4d5675eeb1c8
+
+PUT https://{{host}}/planner/exercise HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "exerciseId": "{{exerciseId}}",
+    "repetitions": "[
+        {
+            "count": 12,
+            "unit": 2,
+            "note": "test"
+        }
+    ]",
+}
+
+@plannerExerciseId = "455d4cd8-fc76-4021-a73b-b58706691b95"

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PersonFit.Domain.Exercise.Infrastructure.Postgres;
@@ -13,12 +14,14 @@ using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
 namespace PersonFit.Domain.Exercise.Migrations
 {
     [DbContext(typeof(PostgresExerciseDomainContext))]
-    partial class PostgresContextModelSnapshot : ModelSnapshot
+    [Migration("20221024172216_PlannerInit")]
+    partial class PlannerInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("exercise")
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -47,7 +50,7 @@ namespace PersonFit.Domain.Exercise.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("Exercises", "exercise");
                 });
 #pragma warning restore 612, 618
         }

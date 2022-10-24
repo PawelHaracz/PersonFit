@@ -19,6 +19,7 @@ namespace PersonFit.Domain.Planner.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("planner")
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -44,7 +45,7 @@ namespace PersonFit.Domain.Planner.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("PlannerExercises", "planner");
                 });
 
             modelBuilder.Entity("PersonFit.Domain.Planner.Infrastructure.Postgres.Documents.PlannerDocument", b =>
@@ -73,7 +74,7 @@ namespace PersonFit.Domain.Planner.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Planners");
+                    b.ToTable("Planners", "planner");
                 });
 #pragma warning restore 612, 618
         }

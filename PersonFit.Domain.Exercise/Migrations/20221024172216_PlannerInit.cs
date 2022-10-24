@@ -7,12 +7,16 @@ using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
 
 namespace PersonFit.Domain.Exercise.Migrations
 {
-    public partial class InitMigration : Migration
+    public partial class PlannerInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "exercise");
+
             migrationBuilder.CreateTable(
                 name: "Exercises",
+                schema: "exercise",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -31,7 +35,8 @@ namespace PersonFit.Domain.Exercise.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Exercises");
+                name: "Exercises",
+                schema: "exercise");
         }
     }
 }

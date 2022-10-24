@@ -7,8 +7,9 @@ using Microsoft.Extensions.Logging;
 
 internal class PostgresPlannerDomainContext : DbContext
 {
+    private const string Schema = "planner";
     private readonly ILoggerFactory _loggerFactory;
-    public virtual DbSet<ExercisePlannerDocument> Exercises { get; private set; }
+    public virtual DbSet<ExercisePlannerDocument> PlannerExercises { get; private set; }
     public virtual DbSet<PlannerDocument> Planners { get; private set; }
     private readonly DbSetting _setting;
     
@@ -29,5 +30,10 @@ internal class PostgresPlannerDomainContext : DbContext
         optionsBuilder.UseLoggerFactory(_loggerFactory);
         optionsBuilder.UseNpgsql(_setting.ToString());
         base.OnConfiguring(optionsBuilder);
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasDefaultSchema(Schema);
     }
 }
