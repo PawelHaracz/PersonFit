@@ -1,6 +1,6 @@
 namespace PersonFit.Domain.Planner.Application.Dtos;
 
-internal  readonly struct RepetitionReorderDto : IEquatable<RepetitionReorderDto>
+public readonly struct RepetitionReorderDto : IEquatable<RepetitionReorderDto>
 {
     public int Old { get; init; }
     public int New { get; init; }

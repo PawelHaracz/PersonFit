@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\PersonFit.Core\PersonFit.Core.csproj" />
         <ProjectReference Include="..\PersonFit.Infrastructure\PersonFit.Infrastructure.csproj" />
     </ItemGroup>
 
