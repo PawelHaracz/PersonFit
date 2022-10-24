@@ -6,7 +6,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <AssemblyName>PersonFit</AssemblyName>
-        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
         <RootNamespace>PersonFit</RootNamespace>
     </PropertyGroup>
     
@@ -15,7 +14,11 @@
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="PersonFit.Domain.Planner\Migrations\20221024170059_PlannerInit.Designer.cs" />
     </ItemGroup>
     
 </Project>

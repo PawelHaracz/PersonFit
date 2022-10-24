@@ -16,5 +16,5 @@
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
         <InternalsVisibleTo Include="PersonFit.Infrastructure" />
     </ItemGroup>
-
+    
 </Project>
