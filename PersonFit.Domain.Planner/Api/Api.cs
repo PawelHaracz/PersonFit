@@ -3,7 +3,6 @@ using PersonFit.Domain.Planner.Api.Dtos.Commands.Planner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using PersonFit.Core.Commands;
-using PersonFit.Core.Queries;
 using PersonFit.Domain.Planner.Application.Commands.Planner;
 using PersonFit.Domain.Planner.Application.Dtos;
 using Application.Enums;
