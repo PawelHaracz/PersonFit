@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace PersonFit.Domain.Planner.Api;
 using PersonFit.Domain.Planner.Api.Dtos.Commands.Planner;
 using Microsoft.AspNetCore.Builder;
@@ -11,15 +9,20 @@ using PersonFit.Domain.Planner.Application.Dtos;
 using Application.Enums;
 using Dtos.Commands.PlannerExercise;
 using Application.Commands.PlannerExercise;
+using Microsoft.AspNetCore.Mvc;
+using Application.Queries;
 
 internal static class  Api
 {
     private static readonly Guid _ownerId = new ("FC8838FE-5A92-472C-8F0E-89BC39DDA978"); 
     public static WebApplication UsePlannerDomainApi(this WebApplication app)
     {
-        app.MapGet("/planner", async (HttpContext context ,  IQueryDispatcher dispatcher, CancellationToken token) =>
+        app.MapGet("/planner", async ([FromQuery]PlannerStatus status, HttpContext context ,  IQueryDispatcher dispatcher, CancellationToken token) =>
         {
-            return Results.NoContent();
+            var query = new GetPlannerQuery(_ownerId, status);
+            var results = await dispatcher.QueryAsync(query, token);
+            
+            return Results.Json(results);
         });
         
         app.MapGet("/planner/{id:guid}", async (HttpContext context ,  Guid id, IQueryDispatcher dispatcher, CancellationToken token) =>

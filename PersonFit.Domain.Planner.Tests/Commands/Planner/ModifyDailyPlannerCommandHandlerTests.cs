@@ -39,7 +39,7 @@ public class ModifyDailyPlannerCommandHandlerTests
             ownerId,
             DateTime.Now.AddDays(-1),
             DateTime.Now.AddDays(1),
-            PlannerStatus.Activate, new []
+            Core.Enums.PlannerStatus.Activate, new []
             {
                 new DailyPlanner(dayOfWeek, timeOfDay, new []{ exerciseId1 })
             });
@@ -79,7 +79,7 @@ public class ModifyDailyPlannerCommandHandlerTests
             ownerId,
             DateTime.Now.AddDays(-1),
             DateTime.Now.AddDays(1),
-            PlannerStatus.Activate, new []
+            Core.Enums.PlannerStatus.Activate, new []
             {
                 new DailyPlanner(dayOfWeek, timeOfDay, new []{ exerciseId1 })
             });
@@ -121,7 +121,7 @@ public class ModifyDailyPlannerCommandHandlerTests
             ownerId,
             DateTime.Now.AddDays(-2),
             DateTime.Now.AddDays(-1),
-            PlannerStatus.Disabled, Enumerable.Empty<DailyPlanner>());
+            Core.Enums.PlannerStatus.Disabled, Enumerable.Empty<DailyPlanner>());
         
         _repository.GetById(ownerId, plannerId, token).Returns(planner);
 
@@ -156,7 +156,7 @@ public class ModifyDailyPlannerCommandHandlerTests
             ownerId,
             DateTime.Now.AddDays(-1),
             DateTime.Now.AddDays(1),
-            PlannerStatus.Activate, new []
+            Core.Enums.PlannerStatus.Activate, new []
             {
                 new DailyPlanner(dayOfWeek, timeOfDay, new []{ exerciseId1 })
             });
@@ -199,7 +199,7 @@ public class ModifyDailyPlannerCommandHandlerTests
             ownerId,
             DateTime.Now.AddDays(-1),
             DateTime.Now.AddDays(1),
-            PlannerStatus.Activate, new []
+            Core.Enums.PlannerStatus.Activate, new []
             {
                 new DailyPlanner(dayOfWeek, timeOfDay, new []{ exerciseId1 })
             });
@@ -240,7 +240,7 @@ public class ModifyDailyPlannerCommandHandlerTests
             ownerId,
             DateTime.Now.AddDays(-1),
             DateTime.Now.AddDays(1),
-            PlannerStatus.Activate, new []
+            Core.Enums.PlannerStatus.Activate, new []
             {
                 new DailyPlanner(dayOfWeek, timeOfDay, new []{ exerciseId1 })
             });

@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Api\Dtos\Queries" />
       <Folder Include="Migrations" />
     </ItemGroup>
     
