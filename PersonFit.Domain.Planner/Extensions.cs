@@ -18,12 +18,10 @@ using Api;
 using Application.Policies;
 using PersonFit.Core.Queries;
 using Application.Dtos;
-using Application.Queries;
-using Application.Queries.QueryDispatcher;
 
 public static class Extensions
 {
-        public static WebApplicationBuilder RegisterPlannerDomain(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder RegisterPlannerDomain(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<PostgresPlannerDomainContext>();
         
@@ -37,7 +35,7 @@ public static class Extensions
         builder.Services.AddScoped<ICommandHandler<RemoveDailyPlannerCommand>, RemoveDailyPlannerCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<ModifyDailyPlannerCommand>, ModifyDailyPlannerCommandHandler>();
 
-        builder.Services.AddScoped< IQueryHandler<GetPlannerQuery, IEnumerable<QueryPlannerDto>>, GetPlannerQueryHandler>();
+        
         // builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, IEnumerable<ExerciseDto>>, GetExercisesQueryHandler>();
         // builder.Services.AddScoped<IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>, GetExerciseQueryHandler>();
 

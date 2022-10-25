@@ -1,8 +1,6 @@
-namespace PersonFit.Domain.Planner.Application.Queries.QueryDispatcher;
+namespace PersonFit.Query.Planner.Application.Queries.QueryDispatcher;
 using PersonFit.Core.Queries;
 using Dtos;
-
-
 internal class GetPlannerQueryHandler : IQueryHandler<GetPlannerQuery, IEnumerable<QueryPlannerDto>>
 {
     public Task<IEnumerable<QueryPlannerDto>> HandleAsync(GetPlannerQuery command, CancellationToken token = default)

@@ -1,4 +1,4 @@
-namespace PersonFit.Domain.Planner.Application.Enums;
+namespace PersonFit.Query.Planner.Application.Enums;
 
 [Flags]
 public enum PlannerStatus

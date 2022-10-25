@@ -10,5 +10,6 @@
       <ProjectReference Include="..\PersonFit.Domain.Exercise\PersonFit.Domain.Exercise.csproj" />
       <ProjectReference Include="..\PersonFit.Domain.Planner\PersonFit.Domain.Planner.csproj" />
       <ProjectReference Include="..\PersonFit.Infrastructure\PersonFit.Infrastructure.csproj" />
+      <ProjectReference Include="..\PersonFit.Query.Planner\PersonFit.Query.Planner.csproj" />
     </ItemGroup>
 </Project>
