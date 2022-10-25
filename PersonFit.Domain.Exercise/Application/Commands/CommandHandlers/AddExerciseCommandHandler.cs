@@ -1,10 +1,8 @@
-using PersonFit.Core.Commands;
-using PersonFit.Core.Events;
-
 namespace PersonFit.Domain.Exercise.Application.Commands.CommandHandlers;
-using PersonFit.Core;
 using Core.Repositories;
 using Exceptions;
+using PersonFit.Core.Commands;
+using PersonFit.Core.Events;
 
 internal class AddExerciseCommandHandler: ICommandHandler<AddExerciseCommand>
 {

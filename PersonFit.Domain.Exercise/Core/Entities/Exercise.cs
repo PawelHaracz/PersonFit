@@ -5,21 +5,21 @@ using PersonFit.Domain.Exercise.Core.ValueObjects;
 
 namespace PersonFit.Domain.Exercise.Core.Entities;
 
-public sealed class Exercise : AggregateRoot, IAggregateRoot
+internal sealed class Exercise : AggregateRoot, IAggregateRoot
 {
-    private ISet<MediaContent> _contents = new HashSet<MediaContent>();
-    private ISet<string> _tags = new HashSet<string>();
+    private readonly ISet<MediaContent> _contents = new HashSet<MediaContent>();
+    private readonly ISet<string> _tags = new HashSet<string>();
 
     public IEnumerable<string> Tags
     {
         get => _tags;
-        private set => _tags = new HashSet<string>(value);
+        private init => _tags = new HashSet<string>(value);
     }
     
     public IEnumerable<MediaContent> Contents
     {
         get => _contents;
-        private set => _contents = new HashSet<MediaContent>(value);
+        private init => _contents = new HashSet<MediaContent>(value);
     }
     public string Name { get; private set; }
     public string Description { get; private set; }

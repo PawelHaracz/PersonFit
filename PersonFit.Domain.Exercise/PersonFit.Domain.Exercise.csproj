@@ -8,11 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PersonFit.Core\PersonFit.Core.csproj" />
       <ProjectReference Include="..\PersonFit.Infrastructure\PersonFit.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+        <InternalsVisibleTo Include="PersonFit.Infrastructure" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations" />
     </ItemGroup>
 </Project>

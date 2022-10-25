@@ -1,6 +1,7 @@
 namespace PersonFit.Domain.Exercise.Tests.Extensions;
+using PersonFit.Core.Tests.Extensions;
 
-public static class AggregateRootExtensions
+internal static class AggregateRootExtensions
 {
     public static bool Compare(this Core.Entities.Exercise first, Core.Entities.Exercise second)
     {

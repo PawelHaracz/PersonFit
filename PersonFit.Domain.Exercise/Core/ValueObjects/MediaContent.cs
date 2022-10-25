@@ -1,8 +1,7 @@
-using PersonFit.Domain.Exercise.Core.Enums;
-
 namespace PersonFit.Domain.Exercise.Core.ValueObjects;
+using Enums;
 
-public struct MediaContent: IEquatable<MediaContent>
+internal readonly struct MediaContent: IEquatable<MediaContent>
 {
     public string Url { get; }
     public MediaContentType Type { get; }
@@ -21,5 +20,12 @@ public struct MediaContent: IEquatable<MediaContent>
     public override int GetHashCode()
     {
         return HashCode.Combine(Url, (int)Type);
+    }
+
+    public int CompareTo(MediaContent other)
+    {
+        var urlComparison = string.Compare(Url, other.Url, StringComparison.Ordinal);
+        if (urlComparison != 0) return urlComparison;
+        return Type.CompareTo(other.Type);
     }
 }
