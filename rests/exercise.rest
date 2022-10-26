@@ -8,7 +8,7 @@
 GET https://{{host}}/exercise HTTP/1.1
 
 ###
-@exerciseId = 2eafd7a2-8522-425a-932c-4d5675eeb1c8
+@exerciseId = 7a3e7649-9e83-4cd0-b528-cbb92ff1b2b8
 
 GET https://{{host}}/exercise/{{exerciseId}} HTTP/1.1
 

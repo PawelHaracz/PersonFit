@@ -1,4 +1,5 @@
-﻿using PersonFit.Query.Planner.Infrastructure.Postgres;
+﻿using PersonFit.Core;
+using PersonFit.Query.Planner.Infrastructure.Postgres;
 namespace PersonFit.Query.Planner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,7 @@ public static class Extensions
 {
     public static WebApplicationBuilder RegisterPlannerQueries(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<PostgresPlannerReadContext>();
+        builder.Services.AddScoped<IReadDbContext, PostgresPlannerReadContext>();
 
         builder.Services
             .AddScoped<IQueryHandler<GetPlannerQuery, IEnumerable<QueryPlannerDto>>, GetPlannerQueryHandler>();
