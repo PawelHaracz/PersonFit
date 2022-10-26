@@ -35,10 +35,6 @@ public static class Extensions
         builder.Services.AddScoped<ICommandHandler<RemoveDailyPlannerCommand>, RemoveDailyPlannerCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<ModifyDailyPlannerCommand>, ModifyDailyPlannerCommandHandler>();
 
-        
-        // builder.Services.AddScoped<IQueryHandler<GetExercisesQuery, IEnumerable<ExerciseDto>>, GetExercisesQueryHandler>();
-        // builder.Services.AddScoped<IQueryHandler<GetExerciseQuery, ExerciseSummaryDto>, GetExerciseQueryHandler>();
-
         builder.Services.AddScoped<IPolicyEvaluator<Core.Entities.Planner>, PlannerPolicyEvaluator>();
         
         builder.Services.AddScoped<IPostgresRepository<ExercisePlannerDocument, Guid>>(
@@ -47,8 +43,7 @@ public static class Extensions
             provider => new PostgresDomainRepository<PlannerDocument>(provider.GetRequiredService<PostgresPlannerDomainContext>()));
         builder.Services.AddScoped<IExerciseRepository, ExercisePlannerDomainRepository>();
         builder.Services.AddScoped<IPlannerRepository, PlannerDomainRepository>();
-        //builder.Services.AddScoped<IReadExerciseRepository, ReadExerciseRepository>();
-        
+
         return builder;
     }
 
