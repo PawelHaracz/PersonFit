@@ -20,6 +20,7 @@ Content-Type: {{contentType}}
 }
 
 @plannerExerciseId = 50da3bc3-c4ef-44f6-bd9a-96bff0fe3fcb
+###
 
 @startTime = "2022-10-31"
 @endTime = "2022-11-31"
@@ -33,3 +34,12 @@ Content-Type: {{contentType}}
 }
 
 @plannerId = cba2e49f-898f-4fe5-b331-bd242fe3d0a3
+###
+
+PUT https://{{host}}/planner/{{plannerId}}/daily HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "startTime": "{{startTime}}",
+    "endTime": "{{endTime}}"
+}

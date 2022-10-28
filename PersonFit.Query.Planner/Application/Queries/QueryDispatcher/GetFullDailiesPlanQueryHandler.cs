@@ -1,12 +1,14 @@
-namespace PersonFit.Query.Planner.Application.Queries.QueryDispatcher;
+using PersonFit.Core;
 using PersonFit.Core.Queries;
-using Core;
-using Dtos;
-internal class GetPlannerQueryHandler : IQueryHandler<GetPlannerQuery, IEnumerable<QueryPlannerDto>>
-{
-    private readonly IReadDbContext _context;
+using PersonFit.Query.Planner.Application.Dtos;
+
+namespace PersonFit.Query.Planner.Application.Queries.QueryDispatcher;
+
+internal class GetFullDailiesPlanQueryHandler: IQueryHandler<GetFullDailiesPlanQuery, IEnumerable<QueryFulldailesPlannerDto>>
+{    private readonly IReadDbContext _context;
+    
     private readonly string _query = 
-    @"select  ex.name, ex.description, ex.media, ex.tags, pex.repetitions, daily_exercises.start_time, daily_exercises.end_time, daily_exercises.status
+        @"select  ex.name, ex.description, ex.media, ex.tags, pex.repetitions, daily_exercises.start_time, daily_exercises.end_time, daily_exercises.status
     from (
         select jsonb_array_elements_text(dailies.elements -> 'ExercisesPlanners') :: uuid as exerciseId,
     dailies.elements -> 'DayOfWeek'                               as dow,
@@ -23,14 +25,16 @@ internal class GetPlannerQueryHandler : IQueryHandler<GetPlannerQuery, IEnumerab
         JOIN exercise.exercises as ex
         ON ex.id = pex.exercise_id
     ";
-    public GetPlannerQueryHandler(IReadDbContext context)
+
+    public GetFullDailiesPlanQueryHandler(IReadDbContext context)
     {
         _context = context;
     }
-    public Task<IEnumerable<QueryPlannerDto>> HandleAsync(GetPlannerQuery command, CancellationToken token = default)
-    {
-        throw new NotImplementedException(); 
-        //return  _context.QueryAsync<IEnumerable<QueryPlannerDto>>(_query, command.OwnerId,  token);
-    } 
-}
 
+
+    public async Task<IEnumerable<QueryFulldailesPlannerDto>> HandleAsync(GetFullDailiesPlanQuery query, CancellationToken token = default)
+    {
+        var z= await  _context.QueryAsync<QueryFulldailesPlannerDto>(_query, query, null,  token);
+        return z;
+    }
+}

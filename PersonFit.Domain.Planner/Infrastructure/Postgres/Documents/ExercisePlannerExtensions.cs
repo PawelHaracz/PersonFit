@@ -9,7 +9,7 @@ internal static class ExercisePlannerExtensions
             document.OwnerId,
             document.ExerciseId,
             document.Repetitions.Select(r =>
-                new Repetition(r.Order, r.Count, (MeasurementUnit)r.MeasurementUnit, r.Note)), 
+                new Repetition(r.Order, r.Count, Enum.Parse<MeasurementUnit>(r.MeasurementUnit), r.Note)), //MeasurementUnit
             document.Version);
 
     public static ExercisePlannerDocument AsDocument(this Core.Entities.PlannerExercise entity)
@@ -23,7 +23,7 @@ internal static class ExercisePlannerExtensions
                 Count = r.Count,
                 Note = r.Note,
                 Order = r.Order,
-                MeasurementUnit = (int)r.Unit
+                MeasurementUnit = r.Unit.ToString()
             }),
             Version = entity.Version
         };
