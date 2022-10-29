@@ -1,3 +1,5 @@
+using PersonFit.Core.Enums;
+
 namespace PersonFit.Domain.Planner.Api.Dtos.Commands.Planner;
 using Core.Enums;
 

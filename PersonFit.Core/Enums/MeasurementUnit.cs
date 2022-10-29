@@ -1,4 +1,4 @@
-namespace PersonFit.Domain.Planner.Core.Enums;
+namespace PersonFit.Core.Enums;
 
 public enum MeasurementUnit
 {

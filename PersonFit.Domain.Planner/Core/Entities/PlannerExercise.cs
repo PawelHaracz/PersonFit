@@ -4,7 +4,7 @@ using Enums;
 using Exceptions;
 using ValueObjects;
 using Events;
-
+using PersonFit.Core.Enums;
 internal class PlannerExercise : AggregateRoot, IAggregateRoot
 {
     public Guid ExerciseId { get; private set; }

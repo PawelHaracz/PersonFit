@@ -1,6 +1,6 @@
 namespace PersonFit.Domain.Planner.Tests.Entities.Planner;
 using System;
-using Core.Enums;
+using PersonFit.Core.Enums;
 using Core.Events;
 using Core.ValueObjects;
 using Shouldly;

@@ -1,5 +1,5 @@
 namespace PersonFit.Domain.Planner.Core.ValueObjects;
-using Enums;
+using PersonFit.Core.Enums;
 internal struct Repetition: IEquatable<Repetition>, IComparable<Repetition>, IComparable
 {
     public Repetition(int order, int count, MeasurementUnit unit, string note)

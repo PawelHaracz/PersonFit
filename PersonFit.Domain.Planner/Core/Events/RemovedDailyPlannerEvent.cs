@@ -1,5 +1,5 @@
 using PersonFit.Core.Events;
-using PersonFit.Domain.Planner.Core.Enums;
+using PersonFit.Core.Enums;
 
 namespace PersonFit.Domain.Planner.Core.Events;
 

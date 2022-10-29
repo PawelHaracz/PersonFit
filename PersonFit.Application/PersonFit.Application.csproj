@@ -12,4 +12,8 @@
       <ProjectReference Include="..\PersonFit.Infrastructure\PersonFit.Infrastructure.csproj" />
       <ProjectReference Include="..\PersonFit.Query.Planner\PersonFit.Query.Planner.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Enums" />
+    </ItemGroup>
 </Project>

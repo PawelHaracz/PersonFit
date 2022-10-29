@@ -1,7 +1,7 @@
 namespace PersonFit.Domain.Planner.Tests.Entities.PlannerExercise;
 using System;
 using PersonFit.Core.Aggregations;
-using Core.Enums;
+using PersonFit.Core.Enums;
 using Core.Events;
 using Shouldly;
 using Xunit;

@@ -1,16 +1,21 @@
+namespace PersonFit.Query.Planner.Api;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PersonFit.Core.Queries;
-using PersonFit.Query.Planner.Application.Enums;
-using PersonFit.Query.Planner.Application.Queries;
-
-namespace PersonFit.Query.Planner.Api;
+using Core.Queries;
+using Application.Dtos;
+using Application.Enums;
+using Application.Queries;
 
 internal static class  Api
 {
     private static readonly Guid _ownerId = new ("FC8838FE-5A92-472C-8F0E-89BC39DDA978");
-
+    private static readonly JsonSerializerOptions _options = new ()
+    {
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+    };
     public static WebApplication UseQueryPlannerDomainApi(this WebApplication app)
     {
         app.MapGet("/planner",
@@ -20,26 +25,17 @@ internal static class  Api
                 var query = new GetPlannerQuery(_ownerId, status);
                 var results = await dispatcher.QueryAsync(query, token);
 
-                return Results.Json(results);
+                return Results.Json(results, _options);
             });
 
         app.MapGet("/planner/{id:guid}",
             async (HttpContext context, Guid id, IQueryDispatcher dispatcher, CancellationToken token) =>
             {
-                return Results.NoContent();
-            });
-        
+                var query = new GetFullDailiesPlanQuery(_ownerId, id);
+                var results = await dispatcher.QueryAsync<FullDailiesPlannerDto>(query, token);
                 
-        app.MapGet("/planner/exercise/{id:guid}", async (HttpContext context ,  Guid id, IQueryDispatcher dispatcher, CancellationToken token) =>
-        {
-            return Results.NoContent();
-        });
-        
-        app.MapGet("/planner/exercise", async (HttpContext context , IQueryDispatcher dispatcher, CancellationToken token) =>
-        {
-            return Results.NoContent();
-        });
-        
+                return Results.Json(results, _options);
+            });
         return app;
     }
 }

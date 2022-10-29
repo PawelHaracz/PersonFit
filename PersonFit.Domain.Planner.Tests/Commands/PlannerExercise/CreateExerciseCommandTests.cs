@@ -11,11 +11,11 @@ using PersonFit.Core.Events;
 using PersonFit.Core.Tests.Extensions;
 using Application.Dtos;
 using Application.Exceptions;
-using Core.Enums;
 using Core.Repositories;
 using Extensions;
 using Xunit;
 using Shouldly;
+using PersonFit.Core.Enums;
 using PersonFit.Domain.Planner.Application.Commands.PlannerExercise;
 using PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
 public class CreateExerciseCommandTests

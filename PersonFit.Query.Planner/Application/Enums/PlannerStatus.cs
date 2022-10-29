@@ -3,6 +3,6 @@ namespace PersonFit.Query.Planner.Application.Enums;
 [Flags]
 public enum PlannerStatus
 {
-    Active = 1,
-    Pending = 2
+    Active = 0,
+    Pending = 4,
 }

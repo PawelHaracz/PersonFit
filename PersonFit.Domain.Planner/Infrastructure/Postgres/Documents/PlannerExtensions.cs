@@ -1,7 +1,7 @@
 namespace PersonFit.Domain.Planner.Infrastructure.Postgres.Documents;
 using Core.Enums;
 using Core.ValueObjects;
-
+using PersonFit.Core.Enums;
 internal static class  PlannerExtensions
 {
     public static Core.Entities.Planner AsEntity(this PlannerDocument document)

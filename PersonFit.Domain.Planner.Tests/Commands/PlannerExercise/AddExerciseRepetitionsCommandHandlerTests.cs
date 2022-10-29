@@ -1,3 +1,4 @@
+
 namespace PersonFit.Domain.Planner.Tests.Commands.PlannerExercise;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ using PersonFit.Core.Commands;
 using PersonFit.Core.Events;
 using PersonFit.Core.Tests.Extensions;
 using Application.Dtos;
-using Core.Enums;
 using Core.Repositories;
 using Infrastructure.Postgres.Documents;
 using Extensions;
@@ -20,7 +20,7 @@ using Shouldly;
 using Xunit;
 using PersonFit.Domain.Planner.Application.Commands.PlannerExercise;
 using PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
-
+using PersonFit.Core.Enums;
 
 public class AddExerciseRepetitionsCommandHandlerTests
 {
