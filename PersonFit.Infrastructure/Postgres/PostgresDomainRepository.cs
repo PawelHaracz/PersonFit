@@ -7,9 +7,9 @@ using Exceptions;
 
 public class PostgresDomainRepository<TEntity>: IPostgresRepository<TEntity, Guid> where TEntity : class, IIdentifiable<Guid>
 {
-    private readonly DbContext _context;
+    private readonly PostgresDomainContext _context;
 
-    public PostgresDomainRepository(DbContext context)
+    public PostgresDomainRepository(PostgresDomainContext context)
     {
         _context = context;
     }

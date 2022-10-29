@@ -1,5 +1,3 @@
-using PersonFit.Domain.Planner.Core.Events;
-
 namespace PersonFit.Domain.Planner.Tests.Commands.Planner;
 using System;
 using System.Collections.Generic;
@@ -19,6 +17,8 @@ using Core.Repositories;
 using Core.ValueObjects;
 using Shouldly;
 using Xunit;
+using PersonFit.Core.Enums;
+using Core.Events;
 public class RemoveDailyPlannerCommandHandlerTests
 {
     [Fact]

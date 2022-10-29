@@ -6,4 +6,21 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\PersonFit.Infrastructure\PersonFit.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+        <InternalsVisibleTo Include="PersonFit.Infrastructure" />
+        <InternalsVisibleTo Include="PersonFit.Query.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Apparatus.Dapper.Json.System" Version="0.1.2" />
+      <PackageReference Include="Dapper" Version="2.0.123" />
+      <PackageReference Include="Dapper.JsonTypeMapping" Version="0.8.2" />
+    </ItemGroup>
+    
 </Project>

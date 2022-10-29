@@ -6,6 +6,7 @@ using Core.Events;
 using Core.ValueObjects;
 using Shouldly;
 using Xunit;
+using PersonFit.Core.Enums;
 public class RemoveDailyPlannerTests
 {
     [Fact]

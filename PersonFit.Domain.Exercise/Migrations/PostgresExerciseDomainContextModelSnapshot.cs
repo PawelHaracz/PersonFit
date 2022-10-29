@@ -29,26 +29,33 @@ namespace PersonFit.Domain.Exercise.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<IEnumerable<Media>>("Media")
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("media");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<IEnumerable<string>>("Tags")
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("tags");
 
                     b.Property<int>("Version")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("version");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_exercises");
 
-                    b.ToTable("Exercises", "exercise");
+                    b.ToTable("exercises", "exercise");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,13 +14,12 @@ using Application.Dtos;
 using Application.Enums;
 using Application.Exceptions;
 using Application.Policies;
-using Core.Enums;
 using Core.Events;
 using Core.Repositories;
 using Core.ValueObjects;
 using Shouldly;
 using Xunit;
-
+using PersonFit.Core.Enums;
 public class ModifyDailyPlannerCommandHandlerTests
 {
     [Fact]

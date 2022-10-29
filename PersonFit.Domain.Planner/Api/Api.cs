@@ -3,33 +3,18 @@ using PersonFit.Domain.Planner.Api.Dtos.Commands.Planner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using PersonFit.Core.Commands;
-using PersonFit.Core.Queries;
 using PersonFit.Domain.Planner.Application.Commands.Planner;
 using PersonFit.Domain.Planner.Application.Dtos;
 using Application.Enums;
 using Dtos.Commands.PlannerExercise;
 using Application.Commands.PlannerExercise;
 using Microsoft.AspNetCore.Mvc;
-using Application.Queries;
 
 internal static class  Api
 {
     private static readonly Guid _ownerId = new ("FC8838FE-5A92-472C-8F0E-89BC39DDA978"); 
     public static WebApplication UsePlannerDomainApi(this WebApplication app)
     {
-        app.MapGet("/planner", async ([FromQuery]PlannerStatus status, HttpContext context ,  IQueryDispatcher dispatcher, CancellationToken token) =>
-        {
-            var query = new GetPlannerQuery(_ownerId, status);
-            var results = await dispatcher.QueryAsync(query, token);
-            
-            return Results.Json(results);
-        });
-        
-        app.MapGet("/planner/{id:guid}", async (HttpContext context ,  Guid id, IQueryDispatcher dispatcher, CancellationToken token) =>
-        {
-            return Results.NoContent();
-        });
-
         app.MapPut("/planner", async ([FromBody]CreatePlannerCommandDto dto, ICommandDispatcher dispatcher,
             HttpContext context,
             CancellationToken token) =>
@@ -72,16 +57,6 @@ internal static class  Api
             var command = new ModifyDailyPlannerCommand(id, _ownerId, dto.DayOfWeek, dto.TimeOfDay, exercises);
             await dispatcher.SendAsync(command, token);
             return Results.Accepted();
-        });
-        
-        app.MapGet("/planner/exercise/{id:guid}", async (HttpContext context ,  Guid id, IQueryDispatcher dispatcher, CancellationToken token) =>
-        {
-            return Results.NoContent();
-        });
-        
-        app.MapGet("/planner/exercise", async (HttpContext context , IQueryDispatcher dispatcher, CancellationToken token) =>
-        {
-            return Results.NoContent();
         });
         
         app.MapPut("/planner/exercise", async ([FromBody]CreateExerciseCommandDto dto, ICommandDispatcher dispatcher,

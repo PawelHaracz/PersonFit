@@ -7,7 +7,7 @@ using PersonFit.Domain.Exercise.Infrastructure.Postgres.Documents;
 
 namespace PersonFit.Domain.Exercise.Migrations
 {
-    public partial class PlannerInit : Migration
+    public partial class ExceriseInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,27 +15,27 @@ namespace PersonFit.Domain.Exercise.Migrations
                 name: "exercise");
 
             migrationBuilder.CreateTable(
-                name: "Exercises",
+                name: "exercises",
                 schema: "exercise",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Tags = table.Column<IEnumerable<string>>(type: "jsonb", nullable: true),
-                    Media = table.Column<IEnumerable<Media>>(type: "jsonb", nullable: true),
-                    Version = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    tags = table.Column<IEnumerable<string>>(type: "jsonb", nullable: true),
+                    media = table.Column<IEnumerable<Media>>(type: "jsonb", nullable: true),
+                    version = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercises", x => x.Id);
+                    table.PrimaryKey("pk_exercises", x => x.id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Exercises",
+                name: "exercises",
                 schema: "exercise");
         }
     }

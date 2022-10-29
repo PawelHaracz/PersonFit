@@ -1,5 +1,5 @@
 namespace PersonFit.Domain.Planner.Core.ValueObjects;
-using Enums;
+using PersonFit.Core.Enums;
 
 internal struct DailyPlanner : IEquatable<DailyPlanner>
 {

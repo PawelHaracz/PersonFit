@@ -14,7 +14,7 @@ using PersonFit.Domain.Planner.Infrastructure.Postgres.Documents;
 namespace PersonFit.Domain.Planner.Migrations
 {
     [DbContext(typeof(PostgresPlannerDomainContext))]
-    [Migration("20221024172234_PlannerInit")]
+    [Migration("20221026184254_PlannerInit")]
     partial class PlannerInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,52 +31,66 @@ namespace PersonFit.Domain.Planner.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("ExerciseId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("exercise_id");
 
                     b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
 
                     b.Property<IEnumerable<RepetitionDao>>("Repetitions")
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("repetitions");
 
                     b.Property<int>("Version")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("version");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_planner_exercises");
 
-                    b.ToTable("PlannerExercises", "planner");
+                    b.ToTable("planner_exercises", "planner");
                 });
 
             modelBuilder.Entity("PersonFit.Domain.Planner.Infrastructure.Postgres.Documents.PlannerDocument", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<IEnumerable<DailyPlannerDao>>("DailyPlanners")
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("daily_planners");
 
                     b.Property<DateTime>("EndTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("end_time");
 
                     b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
 
                     b.Property<DateTime>("StartTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("start_time");
 
                     b.Property<int>("Status")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
 
                     b.Property<int>("Version")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("version");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_planners");
 
-                    b.ToTable("Planners", "planner");
+                    b.ToTable("planners", "planner");
                 });
 #pragma warning restore 612, 618
         }

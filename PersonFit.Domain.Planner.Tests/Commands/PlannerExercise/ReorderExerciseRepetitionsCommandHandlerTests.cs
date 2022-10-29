@@ -11,7 +11,7 @@ using PersonFit.Core.Tests.Extensions;
 using PersonFit.Domain.Planner.Application.Commands.PlannerExercise;
 using PersonFit.Domain.Planner.Application.Commands.PlannerExercise.CommandHandlers;
 using Application.Dtos;
-using Core.Enums;
+using PersonFit.Core.Enums;
 using Core.Repositories;
 using Core.ValueObjects;
 using Extensions;

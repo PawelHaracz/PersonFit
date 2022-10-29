@@ -1,5 +1,5 @@
 namespace PersonFit.Domain.Planner.Application.Dtos;
-using Core.Enums;
+using PersonFit.Core.Enums;
 public record ExerciseRepetitionDto(int Count, MeasurementUnit Unit, string Note)
 {
     
