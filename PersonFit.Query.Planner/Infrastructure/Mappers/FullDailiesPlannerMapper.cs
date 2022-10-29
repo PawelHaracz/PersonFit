@@ -42,7 +42,7 @@ internal class FullDailiesPlannerMapper : IDaoToDtoMapper<IEnumerable<QueryFullD
         }
         catch (Exception e)
         {
-            throw new MappingObjectException(nameof(FullDailiesPlannerDto));
+            throw new MappingObjectException(nameof(FullDailiesPlannerMapper));
         }
     }
 }
