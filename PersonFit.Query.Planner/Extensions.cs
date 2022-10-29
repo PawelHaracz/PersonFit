@@ -1,4 +1,7 @@
-﻿namespace PersonFit.Query.Planner;
+﻿using PersonFit.Query.Planner.Application.Daos;
+using PersonFit.Query.Planner.Infrastructure.Mappers;
+
+namespace PersonFit.Query.Planner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Api;
@@ -15,9 +18,14 @@ public static class Extensions
         builder.Services.AddScoped<IReadDbContext, PostgresPlannerReadContext>();
 
         builder.Services
-            .AddScoped<IQueryHandler<GetPlannerQuery, IEnumerable<QueryPlannerDto>>, GetPlannerQueryHandler>()
+            .AddScoped<IQueryHandler<GetPlannerQuery, IEnumerable<PlannersDto>>, GetPlannerQueryHandler>()
             .AddScoped<IQueryHandler<GetFullDailiesPlanQuery, FullDailiesPlannerDto>, GetFullDailiesPlanQueryHandler>();
-        
+
+        builder.Services
+            .AddSingleton<IDaoToDtoMapper<IEnumerable<QueryPlannerDao>, IEnumerable<PlannersDto>>, PlannerMapper>()
+            .AddSingleton<IDaoToDtoMapper<IEnumerable<QueryFullDailiesPlannerDao>, FullDailiesPlannerDto>,
+                FullDailiesPlannerMapper>();
+
         return builder;
     }
 

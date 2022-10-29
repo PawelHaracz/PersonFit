@@ -1,4 +1,4 @@
-namespace PersonFit.Query.Planner.Application.Dtos;
+namespace PersonFit.Query.Planner.Application.ValueObjects;
 
 public struct Repetition
 {

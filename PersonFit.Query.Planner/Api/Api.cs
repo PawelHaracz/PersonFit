@@ -19,10 +19,11 @@ internal static class  Api
     public static WebApplication UseQueryPlannerDomainApi(this WebApplication app)
     {
         app.MapGet("/planner",
-            async ([FromQuery] PlannerStatus status, HttpContext context, IQueryDispatcher dispatcher,
-                CancellationToken token) =>
+            async (HttpContext context, IQueryDispatcher dispatcher,
+                CancellationToken token, [FromQuery] PlannerStatus? status) =>
             {
-                var query = new GetPlannerQuery(_ownerId, status);
+                var sts = status.GetValueOrDefault(PlannerStatus.Active | PlannerStatus.Pending);
+                var query = new GetPlannerQuery(_ownerId, sts);
                 var results = await dispatcher.QueryAsync(query, token);
 
                 return Results.Json(results, _options);

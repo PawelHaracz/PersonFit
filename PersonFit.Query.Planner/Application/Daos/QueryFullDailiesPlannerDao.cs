@@ -1,8 +1,9 @@
-namespace PersonFit.Query.Planner.Application.Dtos;
+namespace PersonFit.Query.Planner.Application.Daos;
+using Dapper.Json;
 using PersonFit.Core.Enums;
 using Enums;
-using Dapper.Json;
-internal class QueryFullDailesPlannerDto
+using ValueObjects;
+internal class QueryFullDailiesPlannerDao
 {
     public Guid PlanId { get; set; }
     public string ExerciseName { get; set; }

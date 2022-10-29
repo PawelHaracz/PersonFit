@@ -1,6 +1,6 @@
-namespace PersonFit.Query.Planner.Application.Dtos;
+namespace PersonFit.Query.Planner.Application.Daos;
 using Enums;
-internal class QueryPlannerDto
+internal class QueryPlannerDao
 {
     public Guid Id { get; set; }
     public PlannerStatus Status { get; set; }
