@@ -14,7 +14,9 @@ internal static class  Api
     private static readonly Guid _ownerId = new ("FC8838FE-5A92-472C-8F0E-89BC39DDA978");
     private static readonly JsonSerializerOptions _options = new ()
     {
-        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true
     };
     public static WebApplication UseQueryPlannerDomainApi(this WebApplication app)
     {
