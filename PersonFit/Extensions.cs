@@ -5,9 +5,10 @@ internal static class Extensions
 {
     public static WebApplication AddWeb(this WebApplicationBuilder builder)
     {
+        builder.Configuration.AddEnvironmentVariables();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        
         builder.RegisterApplication();
 
         return builder.Build();
@@ -22,7 +23,6 @@ internal static class Extensions
             
         }
         app.UseApplication();
-        
         app.MapGet("/", () =>
         {
             var world = "world";

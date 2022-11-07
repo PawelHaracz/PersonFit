@@ -7,24 +7,36 @@ version: '3'
 # For example, a service, a server, a client, a database...
 # We use the keyword 'services' to start to create services.
 services:
-  # The name of our service is "database"
-  # but you can use the name of your choice.
-  # Note: This may change the commands you are going to use a little bit.
+  personFit:
+    image: personfit
+    ports:
+      - "8080:80"
+    environment:
+      postgres__Database: default_database
+      postgres__Username: username
+      postgres__Password: password
+      postgres__Host: postgres
+      isMigrate: true
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    depends_on:
+      - "database"
+    networks:
+      - personFitNetwork
+
   database:
     # Official Postgres image from DockerHub (we use the last version)
     image: 'postgres:latest'
-
-    # By default, a Postgres database is running on the 5432 port.
-    # If we want to access the database from our computer (outside the container),
-    # we must share the port with our computer's port.
-    # The syntax is [port we want on our machine]:[port we want to retrieve in the container]
-    # Note: You are free to change your computer's port,
-    # but take into consideration that it will change the way
-    # you are connecting to your database.
-    ports:
-      - 5432:5432
-
+#    ports:
+#      - "5432:5432"
     environment:
       POSTGRES_USER: username # The PostgreSQL user (useful to connect to the database)
       POSTGRES_PASSWORD: password # The PostgreSQL password (useful to connect to the database)
       POSTGRES_DB: default_database # T
+    networks:
+      - personFitNetwork
+    hostname: postgres
+      
+networks:
+  personFitNetwork: 

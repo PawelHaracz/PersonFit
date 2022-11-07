@@ -1,4 +1,3 @@
-
 namespace PersonFit.Application;
 using Microsoft.AspNetCore.Builder;
 using Domain.Planner;

@@ -1,7 +1,4 @@
-﻿using PersonFit.Query.Planner.Application.Daos;
-using PersonFit.Query.Planner.Infrastructure.Mappers;
-
-namespace PersonFit.Query.Planner;
+﻿namespace PersonFit.Query.Planner;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Api;
@@ -11,6 +8,8 @@ using Application.Dtos;
 using Application.Queries;
 using Application.Queries.QueryDispatcher;
 using Infrastructure.Postgres;
+using Application.Daos;
+using Infrastructure.Mappers;
 public static class Extensions
 {
     public static WebApplicationBuilder RegisterPlannerQueries(this WebApplicationBuilder builder)
@@ -25,7 +24,6 @@ public static class Extensions
             .AddSingleton<IDaoToDtoMapper<IEnumerable<QueryPlannerDao>, IEnumerable<PlannersDto>>, PlannerMapper>()
             .AddSingleton<IDaoToDtoMapper<IEnumerable<QueryFullDailiesPlannerDao>, FullDailiesPlannerDto>,
                 FullDailiesPlannerMapper>();
-
         return builder;
     }
 
