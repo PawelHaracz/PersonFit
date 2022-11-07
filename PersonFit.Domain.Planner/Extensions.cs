@@ -16,8 +16,7 @@ using PersonFit.Domain.Planner.Application.Commands.Planner;
 using PersonFit.Domain.Planner.Application.Commands.Planner.CommandHandlers;
 using Api;
 using Application.Policies;
-using PersonFit.Core.Queries;
-using Application.Dtos;
+using Microsoft.Extensions.Configuration;
 
 public static class Extensions
 {
@@ -49,7 +48,7 @@ public static class Extensions
 
     public static WebApplication UsePlannerDomain(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment() || app.Configuration.GetValue<bool>("isMigrate"))
         {
             using var scope = app.Services.CreateScope();
             {

@@ -16,3 +16,8 @@ dotnet ef migrations add PlannerInit --context PostgresPlannerDomainContext -p P
 cd PersonFit/infra
 docker-compose up 
 ```
+
+### budowanie obrazu
+```shell
+ docker build -t personfit:0.2  .
+```

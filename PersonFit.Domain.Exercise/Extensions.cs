@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace PersonFit.Domain.Exercise;
 using PersonFit.Core;
 using PersonFit.Core.Commands;
@@ -40,7 +42,7 @@ public static class Extensions
 
     public static WebApplication UseExerciseDomain(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment() || app.Configuration.GetValue<bool>("isMigrate"))
         {
             using var scope = app.Services.CreateScope();
             {
