@@ -1,0 +1,13 @@
+@page "/excerices"
+@inject HttpClient Client;
+@using Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<ExerciseResource> L
+
+<FshTitle Title="@L.GetString(ExerciseResource.AvailableExercises)" Description="@L.GetString(ExerciseResource.AvailableExercisesListDescriptions)" />
+
+<EntityTable @ref="_table" TEntity="ProductDto" TId="Guid" TRequest="ProductViewModel" Context="@Context">
+</EntityTable>
+@code {
+    
+}

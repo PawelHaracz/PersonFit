@@ -9,3 +9,13 @@
 @using Microsoft.JSInterop
 @using PersonFit.Frontend.WebAssembly
 @using PersonFit.Frontend.WebAssembly.Shared
+@using MudBlazor
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+@inject NavigationManager Navigation
+@inject IJSRuntime _jsRuntime
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IConfiguration Config
+@* @inject IClientPreferenceManager ClientPreferences *@
