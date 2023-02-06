@@ -6,11 +6,11 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity?.Name!
-        <button class="nav-link btn btn-link" @onclick="BeginLogout">Log out</button>
+        <MudText Typo="Typo.body1" Class="ml-3">Hello, @context.User.Identity?.Name!</MudText>
+        <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Edge="Edge.End"  OnClick="@BeginLogout"/>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/login">Log in</a>
+         <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Edge="Edge.End"  OnClick="@BeginLogin">Login</MudIconButton>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -19,5 +19,10 @@
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
+    }
+
+    private void BeginLogin(MouseEventArgs args)
+    {
+        Navigation.NavigateTo("authentication/login");
     }
 }
