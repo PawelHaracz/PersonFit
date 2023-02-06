@@ -1,0 +1,44 @@
+@page "/exercises"
+@using PersonFit.Frontend.WebAssembly.HttpClients.Exercise
+@inject IExerciseService Http
+
+<PageTitle>Avaiable Exercises</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Avaiable Exercises</MudText>
+<MudText Class="mb-8">Your avaiable exercies</MudText>
+@if (exercises == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudTable Items="exercises" Hover="true" SortLabel="Sort By" Elevation="0">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ExerciseDto, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<ExerciseDto, object>(x=>x.Tags!)">Tags</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Tags">@context.Tags</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    private Exercise[]? exercises;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dto = await Http.Get();
+        exercises = dto?.Select(Exercise.Map).ToArray();
+    }
+
+    public record Exercise(Guid Id, string Name, string Tags)
+    {
+        public static Exercise Map(ExerciseDto dto) => new(dto.Id, dto.Name, string.Join(", ", dto.Tags));
+    }
+
+}
