@@ -1,44 +1,88 @@
 @page "/exercises"
 @using PersonFit.Frontend.WebAssembly.HttpClients.Exercise
+@using Microsoft.AspNetCore.Components
 @inject IExerciseService Http
 
 <PageTitle>Avaiable Exercises</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Avaiable Exercises</MudText>
 <MudText Class="mb-8">Your avaiable exercies</MudText>
-@if (exercises == null)
+@if (_exercises == null)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
 }
 else
 {
-    <MudTable Items="exercises" Hover="true" SortLabel="Sort By" Elevation="0">
+    <MudTable  @ref="@_table" Items="_exercises" Hover="true" RowsPerPage="20" SortLabel="Sort By" Elevation="0" Filter="new Func<Exercise,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1">
+        <ToolBarContent>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
         <HeaderContent>
-            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ExerciseDto, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<ExerciseDto, object>(x=>x.Tags!)">Tags</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Exercise, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Exercise, object>(x=>x.Tags)">Tags</MudTableSortLabel></MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Name">@context.Name</MudTd>
             <MudTd DataLabel="Tags">@context.Tags</MudTd>
         </RowTemplate>
+        <NoRecordsContent>
+            <MudText>No matching records found</MudText>
+        </NoRecordsContent>
+        <LoadingContent>
+            <MudText>Loading...</MudText>
+        </LoadingContent>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+            <div class="d-flex flex-column align-end align-content-start align-content-space-between">
+                <MudPagination HorizontalAlignment="HorizontalAlignment.Center"
+                               SelectedChanged="PageChanged"
+                               hidden="@HidePager()"
+                               Count="@((_table.GetFilteredItemsCount() + _table.RowsPerPage - 1) / _table.RowsPerPage)"/>
+                <MudText Class="mt-2"  hidden="@HidePager()">Total records: @_table.GetFilteredItemsCount()</MudText> 
+            </div>
         </PagerContent>
+
     </MudTable>
 }
 
 @code {
-    private Exercise[]? exercises;
+    private IEnumerable<Exercise> _exercises;
+    private MudTable<Exercise> _table;
+    private string _searchString1 = string.Empty;
+    private Exercise _selectedItem1 = null;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var dto = await Http.Get();
-        exercises = dto?.Select(Exercise.Map).ToArray();
-    }
-
+    
     public record Exercise(Guid Id, string Name, string Tags)
     {
         public static Exercise Map(ExerciseDto dto) => new(dto.Id, dto.Name, string.Join(", ", dto.Tags));
     }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var dto = await Http.Get();
+        {
+            _exercises = dto.Select(Exercise.Map);
+        }
+    }
+
+    private void PageChanged(int i)
+    {
+        _table.NavigateTo(i - 1);
+    }
+
+    private bool FilterFunc1(Exercise element) => FilterFunc(element, _searchString1);
+
+    private bool FilterFunc(Exercise element, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        
+        return element.Tags.Contains(searchString, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private bool HidePager()
+        => _exercises.Count() <= _table.RowsPerPage;
 
 }
