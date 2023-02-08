@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Extensions;
 using PersonFit.Frontend.WebAssembly;
 using MudBlazor.Services;
 using PersonFit.Frontend.WebAssembly.HttpClients.Exercise;
@@ -21,6 +22,7 @@ builder.Services.AddMsalAuthentication(options =>
     options.AuthenticationPaths.LogOutSucceededPath = "";
 });
 builder.Services.AddMudServices();
+builder.Services.AddMudExtensions();
 builder.Services.AddHttpClient<IExerciseService, FakeExerciseService>();
 
 await builder.Build().RunAsync();

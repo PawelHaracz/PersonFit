@@ -14,18 +14,68 @@
 else
 {
     <MudTable  @ref="@_table" Items="_exercises" Hover="true" RowsPerPage="20" SortLabel="Sort By" Elevation="0" Filter="new Func<Exercise,bool>(FilterFunc1)" @bind-SelectedItem="_selectedItem1">
+        <ColGroup>
+            <col style="width:300px;" />
+            <col style="width:100px;" />
+            <col />>
+        </ColGroup>
         <ToolBarContent>
             <MudSpacer />
             <MudTextField @bind-Value="_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
+            <MudTh></MudTh>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Exercise, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Exercise, object>(x=>x.Tags)">Tags</MudTableSortLabel></MudTh>
         </HeaderContent>
         <RowTemplate>
+            <MudTd>
+                <MudButton @ref="@_detailedButton" 
+                           Variant="Variant.Outlined" 
+                           Size="Size.Small"
+                           OnClick="@(() => ShowBtnPress(context.Id))">@(context.HasDetails ? "Hide" : "Show") details
+                </MudButton>
+            </MudTd>
             <MudTd DataLabel="Name">@context.Name</MudTd>
             <MudTd DataLabel="Tags">@context.Tags</MudTd>
         </RowTemplate>
+        <ChildRowContent>
+        @if (context.HasDetails)
+        {
+              <MudTr>
+               <td colspan="2">
+        	    <MudCard Elevation="0">
+        	     <MudCardHeader>
+        	      <CardHeaderContent>
+        	       <MudText Typo="Typo.body1">Address Details for <strong>@context.Name</strong></MudText>
+        	      </CardHeaderContent>
+        	     </MudCardHeader>
+        	     <MudCardContent Class="pa-0">
+        	      <MudTable Items="@context.Full.Contents" Context="FullExerciseContext" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
+                      <RowTemplate>
+                          <Mudtd>
+                              @if (FullExerciseContext.Type == "video")
+                              {
+                                  <BlazoredVideo
+                                                 class="w-100"
+                                                 style="max-width:800px;"
+                                                 controls="controls">
+                                      <source src="@FullExerciseContext.Url" type="video/mp4" />
+                                  </BlazoredVideo>
+                              }
+                              else
+                              {
+                                  <MudImage Src="@FullExerciseContext.Url" Elevation="25" Class="rounded-lg"/>
+                              }
+                          </Mudtd>
+                      </RowTemplate>
+                  </MudTable>
+        	     </MudCardContent>
+        	    </MudCard>
+               </td>
+              </MudTr>
+        	}
+        </ChildRowContent>
         <NoRecordsContent>
             <MudText>No matching records found</MudText>
         </NoRecordsContent>
@@ -41,27 +91,41 @@ else
                 <MudText Class="mt-2"  hidden="@HidePager()">Total records: @_table.GetFilteredItemsCount()</MudText> 
             </div>
         </PagerContent>
-
     </MudTable>
 }
 
 @code {
-    private IEnumerable<Exercise> _exercises;
+    private Exercise[] _exercises;
     private MudTable<Exercise> _table;
     private string _searchString1 = string.Empty;
     private Exercise _selectedItem1 = null;
-
+    private MudButton _detailedButton;
+    private ExerciseFull _exerciseFull;
     
-    public record Exercise(Guid Id, string Name, string Tags)
+    public record Exercise(Guid Id, string Name, string Tags, bool HasDetails)
     {
-        public static Exercise Map(ExerciseDto dto) => new(dto.Id, dto.Name, string.Join(", ", dto.Tags));
-    }
+        public ExerciseFull Full { get; private set; } = ExerciseFull.Default;
+        public bool HasDetails { get; set; }
     
+        public static Exercise Map(ExerciseDto dto) => new(dto.Id, dto.Name, string.Join(", ", dto.Tags), false);
+
+        public void AddFull(IEnumerable<ExerciseSummaryContent> contents)
+        {
+            Full = new ExerciseFull(Id, Name, Tags, contents);
+        }
+    }
+
+    public record ExerciseFull(Guid Id, string Name, string Tags, IEnumerable<ExerciseSummaryContent> Contents)
+    {
+        public static readonly ExerciseFull Default = new(Guid.Empty, string.Empty, string.Empty, ArraySegment<ExerciseSummaryContent>.Empty);
+    }
+
+  
     protected override async Task OnInitializedAsync()
     {
         var dto = await Http.Get();
         {
-            _exercises = dto.Select(Exercise.Map);
+            _exercises = dto.Select(Exercise.Map).ToArray();
         }
     }
 
@@ -85,4 +149,16 @@ else
     private bool HidePager()
         => _exercises.Count() <= _table.RowsPerPage;
 
+    private async Task ShowBtnPress(Guid id)
+    {
+        var exercise = _exercises.Single(e => e.Id == id);
+        if (!exercise.HasDetails && exercise.Full == ExerciseFull.Default)
+        {
+            var dto = await Http.Get(id);
+            {
+                exercise.AddFull(dto.Contents);
+            }
+        }
+        exercise.HasDetails = !exercise.HasDetails;
+    }
 }

@@ -11,7 +11,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="6.0.1" />
     <PackageReference Include="MudBlazor" Version="6.1.8" />
+    <PackageReference Include="MudBlazor.Extensions" Version="1.7.31" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Blazored.Video" Version="1.0.1"/>
   </ItemGroup>
 
   <ItemGroup>

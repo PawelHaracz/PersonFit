@@ -15,4 +15,12 @@ public class ExerciseService : IExerciseService
 
         return items ?? Enumerable.Empty<ExerciseDto>();
     }
+
+    public async Task<ExerciseSummaryDto> Get(Guid id, CancellationToken token = default)
+    {
+        var item = await _httpClient.GetFromJsonAsync<ExerciseSummaryDto>($"/exercise/{id}", token);
+        if (item != null) return item;
+
+        return ExerciseSummaryDto.Default;
+    }
 }
